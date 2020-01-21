@@ -1,0 +1,18 @@
+{
+    "name": "pers1307/phone-book",
+    "description": "Phone book",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yurii Pereskokov",
+            "email": "skulines@mail.ru"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "pers1307\\phoneBook\\"  : "src"
+        }
+    }
+}
