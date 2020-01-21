@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,15 +28,29 @@
         <div class="card-body register-card-body">
             <p class="login-box-msg">Регистрация</p>
 
-            <form action="../../index.html" method="post">
+            <form action="/register" method="post">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Логин">
+                    <input type="text" name="login" class="form-control" placeholder="Логин">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Пароль">
+                    <input type="password" name="password" class="form-control" placeholder="Пароль">
+                    <div class="input-group-append">
+                        <div class="input-group-text"></div>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" name="password_repeat" class="form-control" placeholder="Подтверждение пароля">
+                    <div class="input-group-append">
+                        <div class="input-group-text"></div>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="email">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>

@@ -29,6 +29,10 @@ class LoginController extends AbstractController
     {
         $r = 1;
 
+
+
+
+
         $result = $this->render('login.php', []);
 
         // рефачить

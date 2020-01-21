@@ -22,13 +22,31 @@ namespace pers1307\phoneBook\controllers;
 //define("POST_ON_PAGE", 3);
 //
 
+use pers1307\phoneBook\forms\RegisterForm;
+use pers1307\phoneBook\service\Request;
 
 class RegisterController extends AbstractController
 {
 
     public function registerAction()
     {
-        $r = 1;
+        $request = (new Request)->createFromGlobals();
+        $registerForm = (new RegisterForm())->getDataFromRequest($request);
+
+        /**
+         * Провалидировать
+         */
+
+        /**
+         * Если все ок - вставляем
+         */
+
+        /**
+         * Если не ок идет нах
+         */
+
+
+
 
         $result = $this->render('register.php', []);
 
