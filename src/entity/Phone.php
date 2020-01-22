@@ -1,6 +1,6 @@
 <?php
 /**
- * User.php
+ * Phone.php
  *
  * @author      Pereskokov Yurii
  * @copyright   2020 Pereskokov Yurii
@@ -10,19 +10,25 @@
 
 namespace pers1307\phoneBook\entity;
 
-class User
+class Phone
 {
     /** @var int */
     private $id;
 
     /** @var string */
-    private $login;
+    private $name;
 
     /** @var string */
-    private $password;
+    private $surname;
+
+    /** @var string */
+    private $phone;
 
     /** @var string */
     private $email;
+
+    /** @var string */
+    private $pathImage;
 
     /**
      * @return int

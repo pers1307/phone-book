@@ -30,30 +30,46 @@
 
             <form action="/register" method="post">
                 <div class="input-group mb-3">
-                    <input type="text" name="login" class="form-control" placeholder="Логин">
+                    <input type="text" name="login" class="form-control <?= !empty($errors['login']) ? 'is-invalid' : '' ?>" placeholder="Логин" value="<?= $registerForm->login ?>">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>
+
+                    <? if(!empty($errors['login'])): ?>
+                        <span class="error invalid-feedback"><?= $errors['login'] ?></span>
+                    <? endif; ?>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Пароль">
+                    <input type="password" name="password" class="form-control <?= !empty($errors['password']) ? 'is-invalid' : '' ?>" placeholder="Пароль" value="<?= $registerForm->password ?>">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>
+
+                    <? if(!empty($errors['password'])): ?>
+                        <span class="error invalid-feedback"><?= $errors['password'] ?></span>
+                    <? endif; ?>
                 </div>
 
                 <div class="input-group mb-3">
-                    <input type="text" name="password_repeat" class="form-control" placeholder="Подтверждение пароля">
+                    <input type="password" name="password_repeat" class="form-control <?= !empty($errors['password_repeat']) ? 'is-invalid' : '' ?>" placeholder="Подтверждение пароля" value="<?= $registerForm->repeatPassword ?>">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>
+
+                    <? if(!empty($errors['password_repeat'])): ?>
+                        <span class="error invalid-feedback"><?= $errors['password_repeat'] ?></span>
+                    <? endif; ?>
                 </div>
 
                 <div class="input-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="email">
+                    <input type="text" name="email" class="form-control <?= !empty($errors['email']) ? 'is-invalid' : '' ?>" placeholder="email" value="<?= $registerForm->email ?>">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>
+
+                    <? if(!empty($errors['email'])): ?>
+                        <span class="error invalid-feedback"><?= $errors['email'] ?></span>
+                    <? endif; ?>
                 </div>
 
                 <div class="row">

@@ -1,111 +1,67 @@
 <?php
 /**
- * IndexController.php
+ * RegisterController.php
  *
  * @author      Pereskokov Yurii
- * @copyright   2015 Pereskokov Yurii
+ * @copyright   2020 Pereskokov Yurii
  * @license     The MIT License (MIT) http://opensource.org/licenses/mit-license.php
- * @link        https://github.com/pers1307/Blog_v_2.0
+ * @link        https://github.com/pers1307/phone-book
  */
 
 namespace pers1307\phoneBook\controllers;
 
-//use pers1307\blog\exception\InvalidAutorizationException;
-//use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\HttpFoundation\Response;
-//use pers1307\blog\repository\ArticleRepository;
-//use pers1307\blog\repository\UserRepository;
-//use pers1307\blog\service\Autorization;
-//use pers1307\blog\service\Log;
-//use KoKoKo\assert\Assert;
-//
-//define("POST_ON_PAGE", 3);
-//
-
+use pers1307\phoneBook\exception\FormNotValidException;
+use pers1307\phoneBook\exception\NoPostArgumentException;
 use pers1307\phoneBook\forms\RegisterForm;
+use pers1307\phoneBook\repository\UserRepository;
+use pers1307\phoneBook\service\ConvertFormToEntity;
+use pers1307\phoneBook\service\Redirect;
 use pers1307\phoneBook\service\Request;
 
 class RegisterController extends AbstractController
 {
-
     public function registerAction()
     {
-        $request = (new Request)->createFromGlobals();
-        $registerForm = (new RegisterForm())->getDataFromRequest($request);
+        try {
+            /** @var Request $request */
+            $request = (new Request)->createFromGlobals();
+            $registerForm = new RegisterForm();
 
-        /**
-         * Провалидировать
-         */
+            if (!is_null($request->getPost())) {
+                $registerForm = $registerForm->getDataFromRequest($request);
+                $registerForm->validate();
 
-        /**
-         * Если все ок - вставляем
-         */
+                $user = (new ConvertFormToEntity())->registerFormToUserEntity($registerForm);
 
-        /**
-         * Если не ок идет нах
-         */
+                (new UserRepository())->insert($user);
+                (new Redirect())->gotoUrl('/register-success');
+            }
 
-
-
-
-        $result = $this->render('register.php', []);
-
-        // рефачить
-        echo $result;
+            $result = $this->render('register.php', ['registerForm' => $registerForm]);
+            echo $result;
+        } catch (FormNotValidException $exception) {
+            $result = $this->render('register.php', [
+                'registerForm' => $registerForm,
+                'errors'       => $registerForm->getErrors(),
+            ]);
+            echo $result;
+        } catch (NoPostArgumentException $exception) {
+            $result = $this->render('server_error.php', []);
+            echo $result;
+        } catch (\Exception $exception) {
+            $result = $this->render('server_error.php', []);
+            echo $result;
+        }
 
         return '';
-
-
-
-
-//        $response->setContent();
-
-//        return $response;
-
-
-//        try {
-//            if ($this->checkUser()) {
-//                $userId = Autorization::getInstance()->getCurrentUserId();
-//            }
-//        } catch (InvalidAutorizationException $exception) {
-//            Log::getInstance()->addError('IndexController()->indexAction : ' . $exception->getMessage());
-//            $errorMessage = $exception->getMessage();
-//        }
-//
-//        $currentPage = (int)$this->pager();
-//        $postOnPage = POST_ON_PAGE;
-//        $rez = $this->getArticles($currentPage, (int)$postOnPage);
-//        $articles = $rez['cutArticles'];
-//
-//        if (empty($articles)) {
-//            $currentPage = 0;
-//        }
-//
-//        $params = [
-//            'articles' => $articles,
-//            'page' => $currentPage,
-//            'countPage' => $rez['countPage'],
-//            'forContent' => 'index.html'
-//        ];
-//
-//        if (!empty($errorMessage)) {
-//            $params['error'] = $errorMessage;
-//        }
-//
-//        if (!empty($userId)) {
-//            $login = (new UserRepository())->findLoginById($userId);
-//            $params['login'] = $login;
-//        }
-//
-//        $response = new Response(
-//            'Content',
-//            Response::HTTP_OK,
-//            ['content-type' => 'text/html']
-//        );
-//        $response->setContent($this->renderByTwig('layoutFilled.html', $params));
-//
-//        return $response;
     }
+
+    public function registerSuccessAction()
+    {
+        $result = $this->render('register_success.php', []);
+        echo $result;
+    }
+
 
 //    /**
 //     * @return int

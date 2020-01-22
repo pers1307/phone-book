@@ -1,6 +1,6 @@
 <?php
 /**
- * InvalidAutorizationException.php
+ * FormNotValidException.php
  *
  * @author      Pereskokov Yurii
  * @copyright   2020 Pereskokov Yurii
@@ -10,7 +10,7 @@
 
 namespace pers1307\phoneBook\exception;
 
-class InvalidAutorizationException extends \Exception
+class FormNotValidException extends \Exception
 {
     /**
      * @param string $message

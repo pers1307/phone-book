@@ -10,65 +10,31 @@
 
 namespace pers1307\phoneBook\repository;
 
+use pers1307\phoneBook\db\MySqlConnection;
+use pers1307\phoneBook\entity\User;
+
 class UserRepository
 {
+    /**
+     * @param User $user
+     */
+    public function insert($user)
+    {
+        $connection = (new MySqlConnection())->getConnection();
+
+        $stmt = $connection->prepare(
+            'INSERT INTO users(`login`, `password`, `email`)
+            VALUES (:login, :password, :email)'
+        );
+
+        $stmt->execute([
+            'login'    => $user->getLogin(),
+            'password' => $user->getPassword(),
+            'email'    => $user->getEmail()
+        ]);
+    }
 
 
-
-
-//    public function insert(article $article)
-//    {
-//        Assert::assert($article->getName(), 'article->getName()')->notEmpty()->string();
-//        Assert::assert($article->getText(), 'article->getText()')->notEmpty()->string();
-//        Assert::assert($article->getAuthor(), 'article->getAuthor()')->notEmpty()->string();
-//        //Assert::assert($article->getPathImage(), 'article->getPathImage()')->notEmpty()->string();
-//
-//        $connection = (new MySqlConnection())->getConnection();
-//
-//        // Добавить автора или вернуть существующего
-//        /**
-//         * todo: вынести в entity, как отдельную сущность, создать новый набор сущностей под новую БД
-//         * todo: на рефакторинг
-//         */
-//        $stmt = $connection->prepare('SELECT id FROM authors WHERE `name` LIKE :author');
-//        $stmt->bindValue(':author', $article->getAuthor(), \PDO::PARAM_STR);
-//        $stmt->execute();
-//        $author = $stmt->fetch();
-//
-//        if (!empty($author)) {
-//            $authorId = $author['id'];
-//        } else {
-//            $stmt = $connection->prepare(
-//                'INSERT INTO authors(`name`)
-//                VALUES (:authorName)'
-//            );
-//
-//            $stmt->execute([
-//                'authorName' => $article->getAuthor()
-//            ]);
-//
-//            $stmt = $connection->prepare('SELECT id FROM authors WHERE `name` LIKE :author');
-//            $stmt->bindValue(':author', $article->getAuthor(), \PDO::PARAM_STR);
-//            $stmt->execute();
-//            $author = $stmt->fetch();
-//            $authorId = $author['id'];
-//        }
-//
-//        //$pathId = (new Files())->add($article->getPathImage());
-//
-//        $stmt = $connection->prepare(
-//            'INSERT INTO articles(`name`, authorId, content, logoId)
-//            VALUES (:articleName, :authotId, :content, :logoId)'
-//        );
-//
-//        $stmt->execute([
-//            'articleName' => $article->getName(),
-//            'authotId' => $authorId,
-//            'content' => $article->getText(),
-//            //'logoId' => $pathId
-//            'logoId' => 1
-//        ]);
-//    }
 
 
 

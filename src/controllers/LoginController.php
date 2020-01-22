@@ -1,32 +1,82 @@
 <?php
 /**
- * IndexController.php
+ * LoginController.php
  *
  * @author      Pereskokov Yurii
- * @copyright   2015 Pereskokov Yurii
+ * @copyright   2020 Pereskokov Yurii
  * @license     The MIT License (MIT) http://opensource.org/licenses/mit-license.php
- * @link        https://github.com/pers1307/Blog_v_2.0
+ * @link        https://github.com/pers1307/phone-book
  */
 
 namespace pers1307\phoneBook\controllers;
 
-//use pers1307\blog\exception\InvalidAutorizationException;
-//use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\HttpFoundation\Response;
-//use pers1307\blog\repository\ArticleRepository;
-//use pers1307\blog\repository\UserRepository;
-//use pers1307\blog\service\Autorization;
-//use pers1307\blog\service\Log;
-//use KoKoKo\assert\Assert;
-//
-//define("POST_ON_PAGE", 3);
-//
+use pers1307\phoneBook\exception\FormNotValidException;
+use pers1307\phoneBook\exception\NoPostArgumentException;
+use pers1307\phoneBook\forms\LoginForm;
+use pers1307\phoneBook\service\ConvertFormToEntity;
+use pers1307\phoneBook\service\Request;
 
 class LoginController extends AbstractController
 {
-
     public function loginAction()
     {
+        /**
+         * Сделать форму
+         */
+
+        /**
+         * Проверить на логин
+         */
+
+        /**
+         * Авторизовать и перебросить
+         */
+
+        /**
+         * Либо нах послать
+         */
+
+        try {
+            /** @var Request $request */
+            $request = (new Request)->createFromGlobals();
+            $loginForm = new LoginForm();
+
+            if (!is_null($request->getPost())) {
+                $loginForm = $loginForm->getDataFromRequest($request);
+                $loginForm->validate();
+
+
+
+
+                /**
+                 * Тут проверить наличие пользователя
+                 */
+
+//                $user = (new ConvertFormToEntity())->registerFormToUserEntity($registerForm);
+//                (new UserRepository())->insert($user);
+//                (new Redirect())->gotoUrl('/register-success');
+            }
+
+            $result = $this->render('login.php', ['loginForm' => $loginForm]);
+            echo $result;
+        } catch (FormNotValidException $exception) {
+            $result = $this->render('login.php', [
+                'loginForm' => $loginForm,
+                'errors'    => $loginForm->getErrors(),
+            ]);
+            echo $result;
+        } catch (NoPostArgumentException $exception) {
+            $result = $this->render('server_error.php', []);
+            echo $result;
+        } catch (\Exception $exception) {
+            $result = $this->render('server_error.php', []);
+            echo $result;
+        }
+
+        return '';
+
+
+
         $r = 1;
 
 

@@ -29,18 +29,26 @@
         <div class="card-body register-card-body">
             <p class="login-box-msg">Авторизация</p>
 
-            <form action="../../index.html" method="post">
+            <form action="/" method="post">
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Логин">
+                    <input type="text" name="login" class="form-control <?= !empty($errors['login']) ? 'is-invalid' : '' ?>" placeholder="Логин">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>
+
+                    <? if(!empty($errors['login'])): ?>
+                        <span class="error invalid-feedback"><?= $errors['login'] ?></span>
+                    <? endif; ?>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Пароль">
+                    <input type="password" name="password" class="form-control <?= !empty($errors['password']) ? 'is-invalid' : '' ?>" placeholder="Пароль">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>
+
+                    <? if(!empty($errors['password'])): ?>
+                        <span class="error invalid-feedback"><?= $errors['password'] ?></span>
+                    <? endif; ?>
                 </div>
 
                 <div class="row">

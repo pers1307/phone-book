@@ -3,14 +3,14 @@
  * MySqlConnection.php
  *
  * @author      Pereskokov Yurii
- * @copyright   2015 Pereskokov Yurii
+ * @copyright   2020 Pereskokov Yurii
  * @license     The MIT License (MIT) http://opensource.org/licenses/mit-license.php
- * @link        https://github.com/pers1307/Blog_v_2.0
+ * @link        https://github.com/pers1307/phone-book
  */
 
-namespace pers1307\blog\db;
+namespace pers1307\phoneBook\db;
 
-use pers1307\blog\config;
+use pers1307\phoneBook\config\Config;
 
 class MySqlConnection
 {
@@ -42,7 +42,7 @@ class MySqlConnection
             \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC
         );
-        $pdo = new \PDO(config\Config::PDO_DSN, config\Config::PDO_USER, config\Config::PDO_PASSWORD, $opt);
+        $pdo = new \PDO(Config::PDO_DSN, Config::PDO_USER, Config::PDO_PASSWORD, $opt);
         self::$connection = $pdo;
     }
 }
