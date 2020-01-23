@@ -31,7 +31,7 @@
 
             <form action="/" method="post">
                 <div class="input-group mb-3">
-                    <input type="text" name="login" class="form-control <?= !empty($errors['login']) ? 'is-invalid' : '' ?>" placeholder="Логин">
+                    <input type="text" name="login" class="form-control <?= !empty($errors['login']) ? 'is-invalid' : '' ?>" placeholder="Логин" value="<?= $loginForm->login ?>">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>
@@ -41,7 +41,7 @@
                     <? endif; ?>
                 </div>
                 <div class="input-group mb-3">
-                    <input type="password" name="password" class="form-control <?= !empty($errors['password']) ? 'is-invalid' : '' ?>" placeholder="Пароль">
+                    <input type="password" name="password" class="form-control <?= !empty($errors['password']) ? 'is-invalid' : '' ?>" placeholder="Пароль" value="<?= $loginForm->password ?>">
                     <div class="input-group-append">
                         <div class="input-group-text"></div>
                     </div>

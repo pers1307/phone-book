@@ -8,19 +8,18 @@
  * @link        https://github.com/pers1307/Blog_v_2.0
  */
 
-namespace pers1307\blog\service;
+namespace pers1307\phoneBook\service;
 
-use KoKoKo\assert\Assert;
-use pers1307\blog\repository\UserRepository;
-use Symfony\Component\HttpFoundation\Session\Session;
+use pers1307\phoneBook\entity\User;
+use pers1307\phoneBook\exception\InvalidAutorizationException;
+use pers1307\phoneBook\exception\NotFoundEntityException;
+use pers1307\phoneBook\exception\WrongPasswordException;
+use pers1307\phoneBook\repository\UserRepository;
 
 class Autorization
 {
     /** @var Autorization */
     private static $instance;
-
-    /** @var Session */
-    private static $session;
 
     private function __construct()
     {
@@ -34,7 +33,7 @@ class Autorization
 
     public function starSession()
     {
-        self::$session->start();
+        session_start();
     }
 
     /**
@@ -44,35 +43,38 @@ class Autorization
     {
         if (is_null(self::$instance)) {
             self::$instance = new self();
-            self::newSession();
         }
 
         return self::$instance;
-    }
-
-    private static function newSession()
-    {
-        if (is_null(self::$session)) {
-            self::$session = new Session();
-        }
     }
 
     /**
      * @param string $login
      * @param string $password
      *
-     * @throw \InvalidArgumentException
      * @return bool
+     *
+     * @throws NotFoundEntityException
+     * @throws WrongPasswordException
      */
     public function signIn($login, $password)
     {
-        Assert::assert($login, 'login')->notEmpty()->string();
-        Assert::assert($password, 'password')->notEmpty()->string();
+        $userRepository = new UserRepository();
 
-        $users = new UserRepository();
-        $user = $users->findByCreditionals($login);
+        /** @var User $user */
+        $user = $userRepository->findByCreditionals($login);
 
-        return !is_null($user); //&& \password_verify($password, $user->getPassword());
+        if (is_null($user)) {
+            throw new NotFoundEntityException('Такого пользователя не существует');
+        }
+
+        if (md5($password) !== $user->getPassword()) {
+            throw new WrongPasswordException('Неверный пароль');
+        }
+
+        $this->setCurrentUserId($user->getId());
+
+        return true;
     }
 
     /**
@@ -82,9 +84,7 @@ class Autorization
      */
     public function setCurrentUserId($userId)
     {
-        Assert::assert($userId, 'userId')->notEmpty()->int();
-
-        self::$session->set('userId', $userId);
+        $_SESSION['userId'] = $userId;
     }
 
     /**
@@ -92,12 +92,12 @@ class Autorization
      */
     public function getCurrentUserId()
     {
-        return self::$session->get('userId');
+        return $_SESSION['userId'];
     }
 
     public function exitSession()
     {
-        self::$session->remove('userId');
+        unset($_SESSION['userId']);
     }
 
     /**
@@ -105,8 +105,24 @@ class Autorization
      */
     public function checkAutorization()
     {
-        if (self::$session->get('userId') === null) {
-            return false;
+        if (isset($_SESSION['userId'])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     *
+     * @throws InvalidAutorizationException
+     */
+    public function checkAutorizationWithException()
+    {
+        if (!isset($_SESSION['userId'])) {
+            throw new InvalidAutorizationException(
+                'У вас нет доступа к этой странице. Пожалуйста, авторизируйтесь.'
+            );
         }
 
         return true;

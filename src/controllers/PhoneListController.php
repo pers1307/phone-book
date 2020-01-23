@@ -10,19 +10,30 @@
 
 namespace pers1307\phoneBook\controllers;
 
-
+use pers1307\phoneBook\exception\InvalidAutorizationException;
+use pers1307\phoneBook\service\Autorization;
 
 class PhoneListController extends AbstractController
 {
-
     public function indexAction()
     {
-        $r = 1;
+        try {
+            Autorization::getInstance()->checkAutorizationWithException();
 
-        $result = $this->render('phone_list.php', []);
 
-        // рефачить
-        echo $result;
+            $result = $this->render('phone_list.php', []);
+            echo $result;
+        } catch (InvalidAutorizationException $exception) {
+            $result = $this->render('autorize_error.php', []);
+            echo $result;
+        } catch (\Exception $exception) {
+
+        }
+
+
+
+//        $r = 1;
+
 
         return '';
 

@@ -41,6 +41,13 @@
                         </a>
                     </li>
                 </ul>
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <li class="nav-item">
+                        <a href="/unlogin" class="nav-link">
+                            <p>Выход</p>
+                        </a>
+                    </li>
+                </ul>
             </nav>
         </div>
     </aside>

@@ -2,13 +2,17 @@
 
 namespace pers1307\phoneBook;
 
+use pers1307\phoneBook\service\Autorization;
 use pers1307\phoneBook\service\Dispatcher;
 use pers1307\phoneBook\service\RouterCollector;
 
 require __DIR__ . '/vendor/autoload.php';
 
+Autorization::getInstance()->starSession();
+
 $router = new RouterCollector();
 $router->addRoute('/', 'pers1307\phoneBook\controllers\LoginController', 'loginAction');
+$router->addRoute('/unlogin', 'pers1307\phoneBook\controllers\LoginController', 'unloginAction');
 $router->addRoute('/register', 'pers1307\phoneBook\controllers\RegisterController', 'registerAction');
 $router->addRoute('/register-success', 'pers1307\phoneBook\controllers\RegisterController', 'registerSuccessAction');
 $router->addRoute('/phones', 'pers1307\phoneBook\controllers\PhoneListController', 'indexAction');

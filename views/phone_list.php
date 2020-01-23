@@ -35,9 +35,16 @@
 
             <nav class="mt-2">
                 <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                    <li class="nav-item has-treeview">
+                    <li class="nav-item">
                         <a href="/phones" class="nav-link">
                             <p>Список номеров</p>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <li class="nav-item">
+                        <a href="/unlogin" class="nav-link">
+                            <p>Выход</p>
                         </a>
                     </li>
                 </ul>

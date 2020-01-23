@@ -34,11 +34,50 @@ class UserRepository
         ]);
     }
 
+    /**
+     * @param string $login
+     *
+     * @return null|User
+     * @throws \InvalidArgumentException
+     */
+    public function findByCreditionals($login)
+    {
+        $connection = (new MySqlConnection())->getConnection();
+        $stmt = $connection->prepare('
+            SELECT *
+            FROM users
+            WHERE users.login = :login
+        ');
 
+        $stmt->bindValue(':login', $login, \PDO::PARAM_STR);
+        $stmt->execute();
 
+        $row = $stmt->fetch();
 
+        if ($row !== false) {
+            $resultUser = $this->setUserFromRowQuery($row);
+        } else {
+            $resultUser = null;
+        }
 
+        return $resultUser;
+    }
 
+    /**
+     * @param array $row
+     *
+     * @return User
+     */
+    protected function setUserFromRowQuery(array $row)
+    {
+        $resultUser = (new User())
+            ->setId($row['id'])
+            ->setLogin($row['login'])
+            ->setEmail($row['email'])
+            ->setPassword($row['password']);
+
+        return $resultUser;
+    }
 
 //    /**
 //     * @return Array
@@ -59,40 +98,7 @@ class UserRepository
 //
 //        return $resultArray;
 //    }
-//
-//    /**
-//     * @param string $login
-//     *
-//     * @return null|User
-//     * @throws \InvalidArgumentException
-//     */
-//    public function findByCreditionals($login)
-//    {
-//        Assert::assert($login, 'login')->notEmpty()->string();
-//
-//        $connection = (new db\MySqlConnection())->getConnection();
-//        $stmt = $connection->prepare('
-//            SELECT *
-//            FROM users
-//            JOIN roles
-//            ON users.roleId = roles.id
-//            WHERE users.login = :login
-//        ');
-//
-//        $stmt->bindValue(':login', $login, \PDO::PARAM_STR);
-//        $stmt->execute();
-//
-//        $row = $stmt->fetch();
-//
-//        if ($row !== false) {
-//            $resultUser = $this->setUserFromRowQuery($row);
-//        } else {
-//            $resultUser = null;
-//        }
-//
-//        return $resultUser;
-//    }
-//
+
 //    /**
 //     * @param int $id
 //     *
@@ -115,23 +121,5 @@ class UserRepository
 //        }
 //
 //        return $login;
-//    }
-//
-//    /**
-//     * @param array $row
-//     *
-//     * @return User
-//     */
-//    protected function setUserFromRowQuery(array $row)
-//    {
-//        Assert::assert($row, 'row')->notEmpty()->isArray();
-//
-//        $resultUser = (new User())
-//            ->setId((int)$row['id'])
-//            ->setLogin($row['login'])
-//            ->setRole($row['name'])
-//            ->setPassword($row['password']);
-//
-//        return $resultUser;
 //    }
 }

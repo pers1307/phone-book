@@ -12,30 +12,17 @@ namespace pers1307\phoneBook\controllers;
 
 use pers1307\phoneBook\exception\FormNotValidException;
 use pers1307\phoneBook\exception\NoPostArgumentException;
+use pers1307\phoneBook\exception\NotFoundEntityException;
+use pers1307\phoneBook\exception\WrongPasswordException;
 use pers1307\phoneBook\forms\LoginForm;
-use pers1307\phoneBook\service\ConvertFormToEntity;
+use pers1307\phoneBook\service\Autorization;
+use pers1307\phoneBook\service\Redirect;
 use pers1307\phoneBook\service\Request;
 
 class LoginController extends AbstractController
 {
     public function loginAction()
     {
-        /**
-         * Сделать форму
-         */
-
-        /**
-         * Проверить на логин
-         */
-
-        /**
-         * Авторизовать и перебросить
-         */
-
-        /**
-         * Либо нах послать
-         */
-
         try {
             /** @var Request $request */
             $request = (new Request)->createFromGlobals();
@@ -45,19 +32,27 @@ class LoginController extends AbstractController
                 $loginForm = $loginForm->getDataFromRequest($request);
                 $loginForm->validate();
 
-
-
-
-                /**
-                 * Тут проверить наличие пользователя
-                 */
-
-//                $user = (new ConvertFormToEntity())->registerFormToUserEntity($registerForm);
-//                (new UserRepository())->insert($user);
-//                (new Redirect())->gotoUrl('/register-success');
+                Autorization::getInstance()->signIn($loginForm->login, $loginForm->password);
+                (new Redirect())->gotoUrl('/phones');
             }
 
             $result = $this->render('login.php', ['loginForm' => $loginForm]);
+            echo $result;
+        } catch (NotFoundEntityException $exception) {
+            $loginForm->setErrorLogin($exception->getMessage());
+
+            $result = $this->render('login.php', [
+                'loginForm' => $loginForm,
+                'errors'    => $loginForm->getErrors(),
+            ]);
+            echo $result;
+        } catch (WrongPasswordException $exception) {
+            $loginForm->setErrorPassword($exception->getMessage());
+
+            $result = $this->render('login.php', [
+                'loginForm' => $loginForm,
+                'errors'    => $loginForm->getErrors(),
+            ]);
             echo $result;
         } catch (FormNotValidException $exception) {
             $result = $this->render('login.php', [
@@ -74,163 +69,12 @@ class LoginController extends AbstractController
         }
 
         return '';
-
-
-
-        $r = 1;
-
-
-
-
-
-        $result = $this->render('login.php', []);
-
-        // рефачить
-        echo $result;
-
-        return '';
-
-
-
-
-//        $response->setContent();
-
-//        return $response;
-
-
-//        try {
-//            if ($this->checkUser()) {
-//                $userId = Autorization::getInstance()->getCurrentUserId();
-//            }
-//        } catch (InvalidAutorizationException $exception) {
-//            Log::getInstance()->addError('IndexController()->indexAction : ' . $exception->getMessage());
-//            $errorMessage = $exception->getMessage();
-//        }
-//
-//        $currentPage = (int)$this->pager();
-//        $postOnPage = POST_ON_PAGE;
-//        $rez = $this->getArticles($currentPage, (int)$postOnPage);
-//        $articles = $rez['cutArticles'];
-//
-//        if (empty($articles)) {
-//            $currentPage = 0;
-//        }
-//
-//        $params = [
-//            'articles' => $articles,
-//            'page' => $currentPage,
-//            'countPage' => $rez['countPage'],
-//            'forContent' => 'index.html'
-//        ];
-//
-//        if (!empty($errorMessage)) {
-//            $params['error'] = $errorMessage;
-//        }
-//
-//        if (!empty($userId)) {
-//            $login = (new UserRepository())->findLoginById($userId);
-//            $params['login'] = $login;
-//        }
-//
-//        $response = new Response(
-//            'Content',
-//            Response::HTTP_OK,
-//            ['content-type' => 'text/html']
-//        );
-//        $response->setContent($this->renderByTwig('layoutFilled.html', $params));
-//
-//        return $response;
     }
 
-//    /**
-//     * @return int
-//     *
-//     * @throws InvalidAutorizationException
-//     */
-//    protected function checkUser()
-//    {
-//        $request = Request::createFromGlobals();
-//
-//        if ($request->query->has('exit')) {
-//            Autorization::getInstance()->exitSession();
-//        }
-//
-//        if ($request->request->has('login') && $request->request->has('password')) {
-//            if ($request->request->get('login') === '' || $request->request->get('password') === '') {
-//                throw new InvalidAutorizationException('Поля пусты');
-//            }
-//
-//            if (Autorization::getInstance()->signIn($request->request->get('login'), $request->request->get('password'))) {
-//                $user = (new UserRepository())->findByCreditionals($request->request->get('login'));
-//                Autorization::getInstance()->setCurrentUserId($user->getId());
-//                header('Location: /articlesDesk');
-//                exit();
-//            } else {
-//                throw new InvalidAutorizationException('Такой пользователь не зарегистрирован');
-//            }
-//        }
-//
-//        return Autorization::getInstance()->checkAutorization();
-//    }
-//
-//    /**
-//     * @return int
-//     */
-//    protected function pager()
-//    {
-//        $request = Request::createFromGlobals();
-//
-//        if ($request->query->has('page')) {
-//            return 1;
-//        } else {
-//            if ($request->query->get('page') <= 0) {
-//                return 1;
-//            } else {
-//                return $request->query->get('page');
-//            }
-//        }
-//    }
-//
-//    /**
-//     * @param int $currentPage
-//     * @param int $postOnPage
-//     *
-//     * @return Array
-//     * @throws \InvalidArgumentException
-//     */
-//    protected function getArticles(&$currentPage, $postOnPage)
-//    {
-//        Assert::assert($currentPage, 'currentPage')->notEmpty()->int();
-//        Assert::assert($postOnPage, 'postOnPage')->notEmpty()->int();
-//
-//        $res['block'] = '';
-//        if ($currentPage === 1) {
-//            $res['block'] = 'start';
-//        }
-//
-//        $article = new ArticleRepository();
-//        $countArticles = $article->count();
-//
-//        if ($currentPage > floor($countArticles / $postOnPage)) {
-//            $currentPage = ceil($countArticles / $postOnPage);
-//        }
-//        $offset = ($currentPage - 1) * $postOnPage;
-//
-//        if ($offset < 0) {
-//            $offset = 0;
-//        }
-//        $articles = $article->findByLimit((int)$postOnPage, (int)$offset);
-//
-//        if (count($articles) < $postOnPage) {
-//            $res['block'] = 'end';
-//        }
-//
-//        if ((int)$countArticles === (int)($currentPage * $postOnPage)) {
-//            $res['block'] = 'end';
-//        }
-//        $res['cutArticles'] = $articles;
-//        $res['countPage'] = ceil($countArticles / $postOnPage);
-//
-//        return $res;
-//    }
+    public function unloginAction()
+    {
+        Autorization::getInstance()->exitSession();
+
+        (new Redirect())->gotoUrl('/');
+    }
 }

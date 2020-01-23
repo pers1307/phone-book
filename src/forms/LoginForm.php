@@ -49,8 +49,8 @@ class LoginForm extends AbstractForm
             throw new NoPostArgumentException('password parameter doesn\'t exist in POST array');
         }
 
-        $this->login          = htmlspecialchars($postData['login']);
-        $this->password       = htmlspecialchars($postData['password']);
+        $this->login    = htmlspecialchars($postData['login']);
+        $this->password = htmlspecialchars($postData['password']);
 
         return $this;
     }
@@ -70,5 +70,21 @@ class LoginForm extends AbstractForm
         if (!empty($this->errors)) {
             throw new FormNotValidException('Form not valid');
         }
+    }
+
+    /**
+     * @param string $errorText
+     */
+    public function setErrorLogin($errorText)
+    {
+        $this->errors['login'] = $errorText;
+    }
+
+    /**
+     * @param string $errorText
+     */
+    public function setErrorPassword($errorText)
+    {
+        $this->errors['password'] = $errorText;
     }
 }
