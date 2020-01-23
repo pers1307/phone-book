@@ -12,6 +12,7 @@ namespace pers1307\phoneBook\forms;
 
 use pers1307\phoneBook\exception\FormNotValidException;
 use pers1307\phoneBook\exception\NoPostArgumentException;
+use pers1307\phoneBook\service\Capcha;
 use pers1307\phoneBook\service\Request;
 
 class RegisterForm extends AbstractForm
@@ -42,6 +43,35 @@ class RegisterForm extends AbstractForm
     public $errors;
 
     /**
+     * @var int
+     */
+    public $capchaId;
+
+    /**
+     * @var string
+     */
+    public $capchaUser;
+
+    public function __construct()
+    {
+        $this->capchaId = (new Capcha())->getRandCapchaId();
+    }
+
+    public function getCapchaImage()
+    {
+        $capcha = (new Capcha())->getCapchaById($this->capchaId);
+
+        return $capcha['image'];
+    }
+
+    public function getCapchaCode()
+    {
+        $capcha = (new Capcha())->getCapchaById($this->capchaId);
+
+        return $capcha['code'];
+    }
+
+    /**
      * @param Request $request
      * @return RegisterForm
      *
@@ -67,10 +97,20 @@ class RegisterForm extends AbstractForm
             throw new NoPostArgumentException('email parameter doesn\'t exist in POST array');
         }
 
+        if (!isset($postData['capcha'])) {
+            throw new NoPostArgumentException('capcha parameter doesn\'t exist in POST array');
+        }
+
+        if (!isset($postData['capchaId'])) {
+            throw new NoPostArgumentException('capchaId parameter doesn\'t exist in POST array');
+        }
+
         $this->login          = htmlspecialchars($postData['login']);
         $this->password       = htmlspecialchars($postData['password']);
         $this->repeatPassword = htmlspecialchars($postData['password_repeat']);
         $this->email          = htmlspecialchars($postData['email']);
+        $this->capchaUser     = htmlspecialchars($postData['capcha']);
+        $this->capchaId       = htmlspecialchars($postData['capchaId']);
 
         return $this;
     }
@@ -107,10 +147,16 @@ class RegisterForm extends AbstractForm
             $this->errors['email'] = 'Адрес указан не верно';
         }
 
+        if ($this->capchaUser !== $this->getCapchaCode()) {
+            $this->errors['capchaUser'] = 'Код введен не верно';
+        }
+
+        if (empty($this->capchaUser)) {
+            $this->errors['capchaUser'] = 'Поле не может быть пустым';
+        }
+
         if (!empty($this->errors)) {
             throw new FormNotValidException('Form not valid');
         }
     }
-
-
 }

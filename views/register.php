@@ -72,6 +72,23 @@
                     <? endif; ?>
                 </div>
 
+                <div class="input-group mb-3">
+                    <img src="<?= $registerForm->getCapchaImage() ?>">
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" name="capcha" class="form-control <?= !empty($errors['capchaUser']) ? 'is-invalid' : '' ?>" placeholder="Код с картинки" value="<?= $registerForm->capchaUser ?>">
+                    <div class="input-group-append">
+                        <div class="input-group-text"></div>
+                    </div>
+
+                    <? if(!empty($errors['capchaUser'])): ?>
+                        <span class="error invalid-feedback"><?= $errors['capchaUser'] ?></span>
+                    <? endif; ?>
+
+                    <input style="display: none" type="text" name="capchaId" class="form-control" value="<?= $registerForm->capchaId ?>">
+                </div>
+
                 <div class="row">
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>

@@ -51,6 +51,23 @@
                     <? endif; ?>
                 </div>
 
+                <div class="input-group mb-3">
+                    <img src="<?= $loginForm->getCapchaImage() ?>">
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="text" name="capcha" class="form-control <?= !empty($errors['capchaUser']) ? 'is-invalid' : '' ?>" placeholder="Код с картинки" value="<?= $loginForm->capchaUser ?>">
+                    <div class="input-group-append">
+                        <div class="input-group-text"></div>
+                    </div>
+
+                    <? if(!empty($errors['capchaUser'])): ?>
+                        <span class="error invalid-feedback"><?= $errors['capchaUser'] ?></span>
+                    <? endif; ?>
+
+                    <input style="display: none" type="text" name="capchaId" class="form-control" value="<?= $loginForm->capchaId ?>">
+                </div>
+
                 <div class="row">
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary btn-block">Войти</button>

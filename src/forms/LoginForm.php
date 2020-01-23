@@ -12,6 +12,7 @@ namespace pers1307\phoneBook\forms;
 
 use pers1307\phoneBook\exception\FormNotValidException;
 use pers1307\phoneBook\exception\NoPostArgumentException;
+use pers1307\phoneBook\service\Capcha;
 use pers1307\phoneBook\service\Request;
 
 class LoginForm extends AbstractForm
@@ -32,6 +33,35 @@ class LoginForm extends AbstractForm
     public $errors;
 
     /**
+     * @var int
+     */
+    public $capchaId;
+
+    /**
+     * @var string
+     */
+    public $capchaUser;
+
+    public function __construct()
+    {
+        $this->capchaId = (new Capcha())->getRandCapchaId();
+    }
+
+    public function getCapchaImage()
+    {
+        $capcha = (new Capcha())->getCapchaById($this->capchaId);
+
+        return $capcha['image'];
+    }
+
+    public function getCapchaCode()
+    {
+        $capcha = (new Capcha())->getCapchaById($this->capchaId);
+
+        return $capcha['code'];
+    }
+
+    /**
      * @param Request $request
      * @return LoginForm
      *
@@ -49,8 +79,18 @@ class LoginForm extends AbstractForm
             throw new NoPostArgumentException('password parameter doesn\'t exist in POST array');
         }
 
-        $this->login    = htmlspecialchars($postData['login']);
-        $this->password = htmlspecialchars($postData['password']);
+        if (!isset($postData['capcha'])) {
+            throw new NoPostArgumentException('capcha parameter doesn\'t exist in POST array');
+        }
+
+        if (!isset($postData['capchaId'])) {
+            throw new NoPostArgumentException('capchaId parameter doesn\'t exist in POST array');
+        }
+
+        $this->login      = htmlspecialchars($postData['login']);
+        $this->password   = htmlspecialchars($postData['password']);
+        $this->capchaUser = htmlspecialchars($postData['capcha']);
+        $this->capchaId   = htmlspecialchars($postData['capchaId']);
 
         return $this;
     }
@@ -65,6 +105,14 @@ class LoginForm extends AbstractForm
 
         if (empty($this->password)) {
             $this->errors['password'] = 'Поле не может быть пустым';
+        }
+
+        if ($this->capchaUser !== $this->getCapchaCode()) {
+            $this->errors['capchaUser'] = 'Код введен не верно';
+        }
+
+        if (empty($this->capchaUser)) {
+            $this->errors['capchaUser'] = 'Поле не может быть пустым';
         }
 
         if (!empty($this->errors)) {

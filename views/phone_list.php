@@ -109,7 +109,7 @@
                                                 <td>
                                                     <a href="/phone/edit/<?= $phone->getId() ?>">Редактировать</a>
                                                     <br>
-                                                    <a href="/phone/delete/<?= $phone->getId() ?>">Удалить</a>
+<!--                                                    <a href="/phone/delete/--><?//= $phone->getId() ?><!--">Удалить</a>-->
                                                 </td>
                                             </tr>
                                         <? endforeach; ?>
