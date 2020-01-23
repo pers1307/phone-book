@@ -10,6 +10,7 @@
 
 namespace pers1307\phoneBook\forms;
 
+use pers1307\phoneBook\entity\Phone;
 use pers1307\phoneBook\exception\FormNotValidException;
 use pers1307\phoneBook\exception\NoPostArgumentException;
 use pers1307\phoneBook\service\Request;
@@ -131,5 +132,17 @@ class PhoneForm extends AbstractForm
         if (!empty($this->errors)) {
             throw new FormNotValidException('Form not valid');
         }
+    }
+
+    /**
+     * @param Phone $phone
+     */
+    public function fromEntityPhone($phone)
+    {
+        $this->name      = $phone->getName();
+        $this->surname   = $phone->getSurname();
+        $this->phone     = $phone->getPhone();
+        $this->email     = $phone->getEmail();
+        $this->pathImage = $phone->getPathImage();
     }
 }

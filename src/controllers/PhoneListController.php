@@ -11,6 +11,7 @@
 namespace pers1307\phoneBook\controllers;
 
 use pers1307\phoneBook\exception\InvalidAutorizationException;
+use pers1307\phoneBook\repository\PhoneRepository;
 use pers1307\phoneBook\service\Autorization;
 
 class PhoneListController extends AbstractController
@@ -20,164 +21,19 @@ class PhoneListController extends AbstractController
         try {
             Autorization::getInstance()->checkAutorizationWithException();
 
+            $userId = Autorization::getInstance()->getCurrentUserId();
+            $phones = (new PhoneRepository())->findAllByUserId($userId);
 
-            $result = $this->render('phone_list.php', []);
+            $result = $this->render('phone_list.php', ['phones' => $phones]);
             echo $result;
         } catch (InvalidAutorizationException $exception) {
             $result = $this->render('autorize_error.php', []);
             echo $result;
         } catch (\Exception $exception) {
-
+            $result = $this->render('server_error.php', []);
+            echo $result;
         }
 
-
-
-//        $r = 1;
-
-
         return '';
-
-
-
-
-//        $response->setContent();
-
-//        return $response;
-
-
-//        try {
-//            if ($this->checkUser()) {
-//                $userId = Autorization::getInstance()->getCurrentUserId();
-//            }
-//        } catch (InvalidAutorizationException $exception) {
-//            Log::getInstance()->addError('IndexController()->indexAction : ' . $exception->getMessage());
-//            $errorMessage = $exception->getMessage();
-//        }
-//
-//        $currentPage = (int)$this->pager();
-//        $postOnPage = POST_ON_PAGE;
-//        $rez = $this->getArticles($currentPage, (int)$postOnPage);
-//        $articles = $rez['cutArticles'];
-//
-//        if (empty($articles)) {
-//            $currentPage = 0;
-//        }
-//
-//        $params = [
-//            'articles' => $articles,
-//            'page' => $currentPage,
-//            'countPage' => $rez['countPage'],
-//            'forContent' => 'index.html'
-//        ];
-//
-//        if (!empty($errorMessage)) {
-//            $params['error'] = $errorMessage;
-//        }
-//
-//        if (!empty($userId)) {
-//            $login = (new UserRepository())->findLoginById($userId);
-//            $params['login'] = $login;
-//        }
-//
-//        $response = new Response(
-//            'Content',
-//            Response::HTTP_OK,
-//            ['content-type' => 'text/html']
-//        );
-//        $response->setContent($this->renderByTwig('layoutFilled.html', $params));
-//
-//        return $response;
     }
-
-//    /**
-//     * @return int
-//     *
-//     * @throws InvalidAutorizationException
-//     */
-//    protected function checkUser()
-//    {
-//        $request = Request::createFromGlobals();
-//
-//        if ($request->query->has('exit')) {
-//            Autorization::getInstance()->exitSession();
-//        }
-//
-//        if ($request->request->has('login') && $request->request->has('password')) {
-//            if ($request->request->get('login') === '' || $request->request->get('password') === '') {
-//                throw new InvalidAutorizationException('Поля пусты');
-//            }
-//
-//            if (Autorization::getInstance()->signIn($request->request->get('login'), $request->request->get('password'))) {
-//                $user = (new UserRepository())->findByCreditionals($request->request->get('login'));
-//                Autorization::getInstance()->setCurrentUserId($user->getId());
-//                header('Location: /articlesDesk');
-//                exit();
-//            } else {
-//                throw new InvalidAutorizationException('Такой пользователь не зарегистрирован');
-//            }
-//        }
-//
-//        return Autorization::getInstance()->checkAutorization();
-//    }
-//
-//    /**
-//     * @return int
-//     */
-//    protected function pager()
-//    {
-//        $request = Request::createFromGlobals();
-//
-//        if ($request->query->has('page')) {
-//            return 1;
-//        } else {
-//            if ($request->query->get('page') <= 0) {
-//                return 1;
-//            } else {
-//                return $request->query->get('page');
-//            }
-//        }
-//    }
-//
-//    /**
-//     * @param int $currentPage
-//     * @param int $postOnPage
-//     *
-//     * @return Array
-//     * @throws \InvalidArgumentException
-//     */
-//    protected function getArticles(&$currentPage, $postOnPage)
-//    {
-//        Assert::assert($currentPage, 'currentPage')->notEmpty()->int();
-//        Assert::assert($postOnPage, 'postOnPage')->notEmpty()->int();
-//
-//        $res['block'] = '';
-//        if ($currentPage === 1) {
-//            $res['block'] = 'start';
-//        }
-//
-//        $article = new ArticleRepository();
-//        $countArticles = $article->count();
-//
-//        if ($currentPage > floor($countArticles / $postOnPage)) {
-//            $currentPage = ceil($countArticles / $postOnPage);
-//        }
-//        $offset = ($currentPage - 1) * $postOnPage;
-//
-//        if ($offset < 0) {
-//            $offset = 0;
-//        }
-//        $articles = $article->findByLimit((int)$postOnPage, (int)$offset);
-//
-//        if (count($articles) < $postOnPage) {
-//            $res['block'] = 'end';
-//        }
-//
-//        if ((int)$countArticles === (int)($currentPage * $postOnPage)) {
-//            $res['block'] = 'end';
-//        }
-//        $res['cutArticles'] = $articles;
-//        $res['countPage'] = ceil($countArticles / $postOnPage);
-//
-//        return $res;
-//    }
 }

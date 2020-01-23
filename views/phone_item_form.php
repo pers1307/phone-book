@@ -78,7 +78,7 @@
                                 <? if(!empty($phoneForm->pathImage)): ?>
                                     <div class="text-center">
                                         <a class="thumbnail">
-                                            <img src="<?= $phoneForm->pathImage ?>" alt="<?= $phoneForm->name ?>">
+                                            <img width="200" src="<?= $phoneForm->pathImage ?>" alt="<?= $phoneForm->name ?>">
                                         </a>
                                     </div>
                                 <? endif; ?>

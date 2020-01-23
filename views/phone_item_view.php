@@ -77,11 +77,13 @@
                         <form role="form">
                             <div class="card-body">
 
-                                <div class="text-center">
-                                    <a class="thumbnail">
-                                        <img src="<?= $phone->getPathImage() ?>" alt="<?= $phone->getName() ?>">
-                                    </a>
-                                </div>
+                                <? if(!empty($phone->getPathImage())): ?>
+                                    <div class="text-center">
+                                        <a class="thumbnail">
+                                            <img width="200" src="<?= $phone->getPathImage() ?>" alt="<?= $phone->getName() ?>">
+                                        </a>
+                                    </div>
+                                <? endif; ?>
 
                                 <div class="form-group">
                                     Имя: <?= $phone->getName() ?>

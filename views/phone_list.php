@@ -73,34 +73,50 @@
                         <a href="/phone/create" class="btn btn-primary">Добавить</a>
                         <br>
 
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table id="example2" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Фото</th>
-                                        <th>Имя</th>
-                                        <th>Фамилия</th>
-                                        <th>Телефон</th>
-                                        <th>Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <img src="/img/vendor/user.jpg" class="img-circle elevation-2" alt="User Image">
-                                        </td>
-                                        <td>Internet
-                                            Explorer 4.0
-                                        </td>
-                                        <td>Win 95+</td>
-                                        <td> 4</td>
-                                        <td>X</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.card-body -->
+                        <? if(!empty($phones)): ?>
+                            <div class="card-body">
+                                <table id="example2" class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Фото</th>
+                                            <th>Имя</th>
+                                            <th>Фамилия</th>
+                                            <th>Телефон</th>
+                                            <th>Email</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <? foreach($phones as $phone): ?>
+                                            <tr>
+                                                <td>
+                                                    <? if(!empty($phone->getPathImage())): ?>
+                                                        <img width="200" src="<?= $phone->getPathImage() ?>" alt="<?= $phone->getName() ?>">
+                                                    <? endif; ?>
+                                                </td>
+                                                <td>
+                                                    <?= $phone->getName() ?>
+                                                </td>
+                                                <td>
+                                                    <?= $phone->getSurname() ?>
+                                                </td>
+                                                <td>
+                                                    <?= $phone->getPhone() ?>
+                                                </td>
+                                                <td>
+                                                    <?= $phone->getEmail() ?>
+                                                </td>
+                                                <td>
+                                                    <a href="/phone/edit/<?= $phone->getId() ?>">Редактировать</a>
+                                                    <br>
+                                                    <a href="/phone/delete/<?= $phone->getId() ?>">Удалить</a>
+                                                </td>
+                                            </tr>
+                                        <? endforeach; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <? endif; ?>
                     </div>
                 </div>
                 <!-- /.col -->

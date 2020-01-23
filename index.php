@@ -17,6 +17,12 @@ $router->addRoute('/register', 'pers1307\phoneBook\controllers\RegisterControlle
 $router->addRoute('/register-success', 'pers1307\phoneBook\controllers\RegisterController', 'registerSuccessAction');
 $router->addRoute('/phones', 'pers1307\phoneBook\controllers\PhoneListController', 'indexAction');
 $router->addRoute('/phone/{id}', 'pers1307\phoneBook\controllers\PhoneItemController', 'viewAction');
+
+
+
+$router->addRoute('/phone/delete/{id}', 'pers1307\phoneBook\controllers\PhoneItemController', 'deleteAction');
+
+
 $router->addRoute('/phone/create', 'pers1307\phoneBook\controllers\PhoneItemController', 'createAction');
 $router->addRoute('/phone/edit/{id}', 'pers1307\phoneBook\controllers\PhoneItemController', 'editAction');
 
