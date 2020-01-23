@@ -63,6 +63,9 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
+                        <a href="/phone/create" class="btn btn-primary">Добавить</a>
+                        <br>
+
                         <!-- /.card-header -->
                         <div class="card-body">
                             <table id="example2" class="table table-bordered table-hover">
@@ -100,13 +103,8 @@
         <!-- /.content -->
     </div>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+    <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
-<!-- ./wrapper -->
 
 <!-- jQuery -->
 <script src="/js/vendors/jquery.min.js"></script>

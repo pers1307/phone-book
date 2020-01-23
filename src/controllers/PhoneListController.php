@@ -1,26 +1,15 @@
 <?php
 /**
- * IndexController.php
+ * PhoneListController.php
  *
  * @author      Pereskokov Yurii
- * @copyright   2015 Pereskokov Yurii
+ * @copyright   2020 Pereskokov Yurii
  * @license     The MIT License (MIT) http://opensource.org/licenses/mit-license.php
- * @link        https://github.com/pers1307/Blog_v_2.0
+ * @link        https://github.com/pers1307/phone-book
  */
 
 namespace pers1307\phoneBook\controllers;
 
-//use pers1307\blog\exception\InvalidAutorizationException;
-//use Symfony\Component\HttpFoundation\Request;
-//use Symfony\Component\HttpFoundation\Response;
-//use pers1307\blog\repository\ArticleRepository;
-//use pers1307\blog\repository\UserRepository;
-//use pers1307\blog\service\Autorization;
-//use pers1307\blog\service\Log;
-//use KoKoKo\assert\Assert;
-//
-//define("POST_ON_PAGE", 3);
-//
 
 
 class PhoneListController extends AbstractController

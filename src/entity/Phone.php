@@ -31,6 +31,18 @@ class Phone
     private $pathImage;
 
     /**
+     * @param $id
+     *
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
      * @return int
      */
     public function getId()
@@ -39,13 +51,13 @@ class Phone
     }
 
     /**
-     * @param string $login
+     * @param string $name
      *
-     * @return User
+     * @return Phone
      */
-    public function setLogin($login)
+    public function setName($name)
     {
-        $this->login = $login;
+        $this->name = $name;
 
         return $this;
     }
@@ -53,19 +65,19 @@ class Phone
     /**
      * @return string
      */
-    public function getLogin()
+    public function getName()
     {
-        return $this->login;
+        return $this->name;
     }
 
     /**
-     * @param string $password
+     * @param string $surname
      *
-     * @return User
+     * @return Phone
      */
-    public function setPassword($password)
+    public function setSurname($surname)
     {
-        $this->password = $password;
+        $this->surname = $surname;
 
         return $this;
     }
@@ -73,15 +85,35 @@ class Phone
     /**
      * @return string
      */
-    public function getPassword()
+    public function getSurname()
     {
-        return $this->password;
+        return $this->surname;
+    }
+
+    /**
+     * @param string $phone
+     *
+     * @return Phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
     }
 
     /**
      * @param string $email
      *
-     * @return User
+     * @return Phone
      */
     public function setEmail($email)
     {
@@ -96,5 +128,25 @@ class Phone
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @param string $pathImage
+     *
+     * @return Phone
+     */
+    public function setPathImage($pathImage)
+    {
+        $this->pathImage = $pathImage;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathImage()
+    {
+        return $this->pathImage;
     }
 }

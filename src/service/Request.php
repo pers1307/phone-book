@@ -23,6 +23,11 @@ class Request
     protected $getParams;
 
     /**
+     * @var array
+     */
+    protected $filesParams;
+
+    /**
      * @return Request
      */
     public function createFromGlobals()
@@ -33,6 +38,10 @@ class Request
 
         if (isset($_POST) && !empty($_POST)) {
             $this->postParams = $_POST;
+        }
+
+        if (isset($_FILES) && !empty($_FILES)) {
+            $this->filesParams = $_FILES;
         }
 
         return $this;
@@ -52,5 +61,13 @@ class Request
     public function getGet()
     {
         return $this->getParams;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFiles()
+    {
+        return $this->filesParams;
     }
 }

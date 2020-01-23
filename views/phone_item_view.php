@@ -72,30 +72,30 @@
 
                                 <div class="text-center">
                                     <a class="thumbnail">
-                                        <img src="/img/vendor/user.jpg" alt="...">
+                                        <img src="<?= $phone->getPathImage() ?>" alt="<?= $phone->getName() ?>">
                                     </a>
                                 </div>
 
                                 <div class="form-group">
-                                    Имя: 1111
+                                    Имя: <?= $phone->getName() ?>
                                 </div>
 
 
                                 <div class="form-group">
-                                    Фамилия: 2222
+                                    Фамилия: <?= $phone->getSurname() ?>
                                 </div>
 
                                 <div class="form-group">
-                                    Телефон: +7912
+                                    Телефон: <?= $phone->getPhone() ?>
                                 </div>
 
                                 <div class="form-group">
-                                    Email: sk
+                                    Email: <?= $phone->getEmail() ?>
                                 </div>
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Редактировать</button>
+                                <a href="/phone/edit/<?= $phone->getId() ?>" class="btn btn-primary">Редактировать</a>
                             </div>
                         </form>
                     </div>
@@ -109,9 +109,7 @@
     </div>
 
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
+    <aside class="control-sidebar control-sidebar-dark"></aside>
     <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
@@ -125,20 +123,5 @@
 <script src="/js/vendors/dataTables.bootstrap4.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/js/vendors/adminlte.min.js"></script>
-
-<!-- page script -->
-<script>
-//    $(function () {
-//        $("#example1").DataTable();
-//        $('#example2').DataTable({
-//            "paging": true,
-//            "lengthChange": false,
-//            "searching": false,
-//            "ordering": true,
-//            "info": true,
-//            "autoWidth": false
-//        });
-//    });
-</script>
 </body>
 </html>

@@ -35,9 +35,30 @@ class Dispatcher
             $controller = new $className;
 
             return $controller->$methodName();
-
-//            return call_user_func_array($this->routes[$uri], []);
         }
+
+        foreach ($this->routes as $route => $arrayWithClass) {
+            if (strripos($route, '{id}') !== false) {
+                $newTemplateRoute = str_replace('{id}', '', $route);
+                preg_match('/(\d+)/', $uri, $matches);
+
+                $id = $matches[0];
+                $uriWithoutId = str_replace($id, '', $uri);
+
+                if ($uriWithoutId == $newTemplateRoute) {
+                    $className  = $this->routes[$route][0];
+                    $methodName = $this->routes[$route][1];
+
+                    $controller = new $className;
+
+                    return $controller->$methodName($id);
+                }
+            }
+        }
+
+        /**
+         * Сделать 404
+         */
 
         return '';
     }

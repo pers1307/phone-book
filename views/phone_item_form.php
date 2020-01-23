@@ -47,7 +47,6 @@
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
             <div class="container-fluid">
                 <div class="row mb-2">
@@ -55,10 +54,9 @@
                         <h1>Контакт</h1>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
 
-        <!-- Main content -->
         <section class="content">
             <div class="row">
                 <div class="col-12">
@@ -67,47 +65,70 @@
                             <h3 class="card-title">Редактирование контакта</h3>
                         </div>
 
-                        <form role="form">
+                        <form role="form" method="post" action="" enctype="multipart/form-data">
                             <div class="card-body">
 
-                                <div class="text-center">
-                                    <a class="thumbnail">
-                                        <img src="/img/vendor/user.jpg" alt="...">
-                                    </a>
-                                </div>
+                                <? if(!empty($phoneForm->pathImage)): ?>
+                                    <div class="text-center">
+                                        <a class="thumbnail">
+                                            <img src="<?= $phoneForm->pathImage ?>" alt="<?= $phoneForm->name ?>">
+                                        </a>
+                                    </div>
+                                <? endif; ?>
 
-                                <!--  todo: тут доработать -->
                                 <div class="form-group">
                                     <label for="exampleInputFile">Фото</label>
                                     <div class="input-group">
                                         <div class="custom-file">
-                                            <input type="file" class="custom-file-input" id="exampleInputFile">
-                                            <label class="custom-file-label" for="exampleInputFile">Выберете файл</label>
+                                            <input type="file" class="custom-file-input" name="photo" id="photoId">
+                                            <label class="custom-file-label" for="photoId">Выберете файл</label>
                                         </div>
                                         <div class="input-group-append">
                                             <span class="input-group-text" id="">Загрузка</span>
                                         </div>
                                     </div>
+
+                                    <span>Рекомендуемый размер изображения 200x200</span>
+                                    <br>
+                                    <? if(!empty($errors['photo'])): ?>
+                                        <span class="error invalid-feedback"><?= $errors['photo'] ?></span>
+                                    <? endif; ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Имя</label>
-                                    <input type="text" class="form-control" id="exampleInputEmail1">
+                                    <label for="nameId">Имя</label>
+                                    <input type="text" name="name" class="form-control <?= !empty($errors['name']) ? 'is-invalid' : '' ?>" id="nameId" value="<?= $phoneForm->name ?>">
+
+                                    <? if(!empty($errors['name'])): ?>
+                                        <span class="error invalid-feedback"><?= $errors['name'] ?></span>
+                                    <? endif; ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Фамилия</label>
-                                    <input type="text" class="form-control" id="exampleInputPassword1">
+                                    <label for="surnameId">Фамилия</label>
+                                    <input type="text" name="surname" class="form-control <?= !empty($errors['surname']) ? 'is-invalid' : '' ?>" id="surnameId" value="<?= $phoneForm->surname ?>">
+
+                                    <? if(!empty($errors['surname'])): ?>
+                                        <span class="error invalid-feedback"><?= $errors['surname'] ?></span>
+                                    <? endif; ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Телефон</label>
-                                    <input type="text" class="form-control" id="exampleInputPassword1">
+                                    <label for="phoneId">Телефон</label>
+                                    <input type="text" name="phone" class="form-control <?= !empty($errors['phone']) ? 'is-invalid' : '' ?>" id="phoneId" value="<?= $phoneForm->phone ?>">
+
+                                    <? if(!empty($errors['phone'])): ?>
+                                        <span class="error invalid-feedback"><?= $errors['phone'] ?></span>
+                                    <? endif; ?>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Email</label>
-                                    <input type="email" class="form-control" id="exampleInputPassword1">
+                                    <label for="emailId">Email</label>
+                                    <input type="text" name="email" class="form-control <?= !empty($errors['email']) ? 'is-invalid' : '' ?>" id="emailId" value="<?= $phoneForm->email ?>">
+
+                                    <? if(!empty($errors['email'])): ?>
+                                        <span class="error invalid-feedback"><?= $errors['email'] ?></span>
+                                    <? endif; ?>
                                 </div>
                             </div>
 
@@ -125,13 +146,8 @@
         <!-- /.content -->
     </div>
 
-    <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
-    </aside>
-    <!-- /.control-sidebar -->
+    <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
-<!-- ./wrapper -->
 
 <!-- jQuery -->
 <script src="/js/vendors/jquery.min.js"></script>
@@ -143,19 +159,5 @@
 <!-- AdminLTE App -->
 <script src="/js/vendors/adminlte.min.js"></script>
 
-<!-- page script -->
-<script>
-    //    $(function () {
-    //        $("#example1").DataTable();
-    //        $('#example2').DataTable({
-    //            "paging": true,
-    //            "lengthChange": false,
-    //            "searching": false,
-    //            "ordering": true,
-    //            "info": true,
-    //            "autoWidth": false
-    //        });
-    //    });
-</script>
 </body>
 </html>
