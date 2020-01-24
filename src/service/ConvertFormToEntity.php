@@ -42,7 +42,15 @@ class ConvertFormToEntity
      *
      * @throws \Exception
      */
-    public function phoneFormToPhoneEntity($phoneForm)
+
+    /**
+     * @param PhoneForm $phoneForm
+     * @param int $userId
+     *
+     * @return Phone
+     * @throws \Exception
+     */
+    public function phoneFormToPhoneEntity($phoneForm, $userId)
     {
         $pathToUrl = '';
 
@@ -62,7 +70,8 @@ class ConvertFormToEntity
             ->setSurname($phoneForm->surname)
             ->setPhone($phoneForm->phone)
             ->setEmail($phoneForm->email)
-            ->setPathImage($pathToUrl);
+            ->setPathImage($pathToUrl)
+            ->setUserId($userId);
 
         return $phone;
     }

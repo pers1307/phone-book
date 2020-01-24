@@ -102,6 +102,8 @@
                                                 </td>
                                                 <td>
                                                     <?= $phone->getPhone() ?>
+                                                    <br>
+                                                    <?= $phoneToText->convertPhoneToText($phone->getPhone()) ?>
                                                 </td>
                                                 <td>
                                                     <?= $phone->getEmail() ?>

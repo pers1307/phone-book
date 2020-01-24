@@ -13,6 +13,7 @@ namespace pers1307\phoneBook\controllers;
 use pers1307\phoneBook\exception\InvalidAutorizationException;
 use pers1307\phoneBook\repository\PhoneRepository;
 use pers1307\phoneBook\service\Autorization;
+use pers1307\phoneBook\service\PhoneToText;
 
 class PhoneListController extends AbstractController
 {
@@ -24,7 +25,10 @@ class PhoneListController extends AbstractController
             $userId = Autorization::getInstance()->getCurrentUserId();
             $phones = (new PhoneRepository())->findAllByUserId($userId);
 
-            $result = $this->render('phone_list.php', ['phones' => $phones]);
+            $result = $this->render('phone_list.php', [
+                'phones'      => $phones,
+                'phoneToText' => (new PhoneToText()),
+            ]);
             echo $result;
         } catch (InvalidAutorizationException $exception) {
             $result = $this->render('autorize_error.php', []);

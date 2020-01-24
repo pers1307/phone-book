@@ -30,6 +30,9 @@ class Phone
     /** @var string */
     private $pathImage;
 
+    /** @var int */
+    private $userId;
+
     /**
      * @param $id
      *
@@ -148,5 +151,25 @@ class Phone
     public function getPathImage()
     {
         return $this->pathImage;
+    }
+
+    /**
+     * @param string $userId
+     *
+     * @return Phone
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUserId()
+    {
+        return $this->userId;
     }
 }

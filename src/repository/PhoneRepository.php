@@ -25,8 +25,8 @@ class PhoneRepository
         $connection = (new MySqlConnection())->getConnection();
 
         $stmt = $connection->prepare(
-            'INSERT INTO phones(`name`, `surname`, `phone`, `email`, `path_image`)
-            VALUES (:name, :surname, :phone, :email, :path_image)'
+            'INSERT INTO phones(`name`, `surname`, `phone`, `email`, `path_image`, `userId`)
+            VALUES (:name, :surname, :phone, :email, :path_image, :userId)'
         );
 
         $stmt->execute([
@@ -34,7 +34,8 @@ class PhoneRepository
             'surname'    => $phone->getSurname(),
             'phone'      => $phone->getPhone(),
             'email'      => $phone->getEmail(),
-            'path_image' => $phone->getPathImage()
+            'path_image' => $phone->getPathImage(),
+            'userId'     => $phone->getUserId()
         ]);
 
         $phone
