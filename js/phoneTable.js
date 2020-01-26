@@ -123,4 +123,31 @@ $(document).ready(function() {
             }
         }); // $.ajax
     });
+
+    /**
+     * sort
+     */
+    $(document).on('click', '.js-sort', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var name = $(this).data('name');
+        var next = $(this).data('next');
+
+        $.ajax({
+            type: "POST",
+            url: '/api/phone/sort',
+            data: { name : name, next : next },
+            success: function(response)
+            {
+                response = JSON.parse(response);
+                $('#phone-table').replaceWith(response.table);
+            },
+            error: function(response)
+            {
+                response = JSON.parse(response.responseText);
+                alert(response.error);
+            }
+        }); // $.ajax
+    });
 });

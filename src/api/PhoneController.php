@@ -18,6 +18,7 @@ use pers1307\phoneBook\exception\NotFoundFileException;
 use pers1307\phoneBook\forms\PhoneForm;
 use pers1307\phoneBook\forms\PhoneIdForm;
 use pers1307\phoneBook\forms\PhoneRemoveForm;
+use pers1307\phoneBook\forms\SortForm;
 use pers1307\phoneBook\repository\PhoneRepository;
 use pers1307\phoneBook\service\Autorization;
 use pers1307\phoneBook\service\ConvertFormToEntity;
@@ -212,10 +213,51 @@ class PhoneController extends AbstractController
         }
     }
 
-
     public function sortAction()
     {
+        try {
+            Autorization::getInstance()->checkAutorizationWithException();
 
+            /** @var Request $request */
+            $request = (new Request)->createFromGlobals();
+            $sortForm = new SortForm();
+
+            if (!is_null($request->getPost())) {
+                $sortForm = $sortForm->getDataFromRequest($request);
+                $sortForm->validate();
+            }
+
+
+            $userId = Autorization::getInstance()->getCurrentUserId();
+            $phones = (new PhoneRepository())->findAllByUserIdAndSort($userId, $sortForm->name, $sortForm->next);
+
+            $response = new Response(200, Response::CONTENT_JSON);
+            $response->setContent(json_encode([
+                'table' => $this->render('templates/phone_table.php', [
+                    'phones'      => $phones,
+                    'phoneToText' => (new PhoneToText()),
+                    'name'        => $sortForm->name,
+                    'next'        => $sortForm->next,
+                ])
+            ]));
+            return $response;
+        } catch (InvalidAutorizationException $exception) {
+            $response = new Response(Response::HTTP_UNAUTHORIZED, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => $exception->getMessage()]));
+            return $response;
+        } catch (FormNotValidException $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
+            return $response;
+        } catch (NoPostArgumentException $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
+            return $response;
+        } catch (\Exception $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
+            return $response;
+        }
     }
 
     public function getRowForNewPhone()

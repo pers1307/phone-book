@@ -77,14 +77,17 @@
 
                         <? if(!empty($phones)): ?>
                             <div class="card-body">
-                                <table id="phone-table" class="table table-bordered">
+                                <table id="phone-table" class="table table-bordered dataTable no-footer">
                                     <thead>
                                         <tr>
                                             <th>Фото</th>
-                                            <th>Имя</th>
-                                            <th>Фамилия</th>
-                                            <th>Телефон</th>
-                                            <th>Email</th>
+
+                                            <th class="js-sort sorting" data-name="name" data-next="asc">Имя</span></th>
+                                            <th class="js-sort sorting" data-name="surname" data-next="asc">Фамилия</th>
+<!--                                            <th class="sorting_asc">Телефон </th>-->
+<!--                                            <th class="sorting_desc">Телефон </th>-->
+                                            <th class="js-sort sorting" data-name="phone" data-next="asc">Телефон</th>
+                                            <th class="js-sort sorting" data-name="email" data-next="asc">Email </th>
                                             <th></th>
                                         </tr>
                                     </thead>
@@ -151,17 +154,9 @@
 
 <!-- page script -->
 <script>
-//    $(function () {
-//        $("#example1").DataTable();
-//        $('#example2').DataTable({
-//            "paging": true,
-//            "lengthChange": false,
-//            "searching": false,
-//            "ordering": true,
-//            "info": true,
-//            "autoWidth": false
-//        });
-//    });
+    $(function () {
+//        $("#phone-table").DataTable();
+    });
 </script>
 </body>
 </html>

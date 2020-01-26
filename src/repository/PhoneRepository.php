@@ -92,6 +92,33 @@ class PhoneRepository
     }
 
     /**
+     * @param $userId
+     * @param string $sortField
+     * @param string $order
+     *
+     * @return array
+     */
+    public function findAllByUserIdAndSort($userId, $sortField, $order)
+    {
+        $connection = (new MySqlConnection())->getConnection();
+
+        $stmt = $connection->prepare(
+            'SELECT * FROM phones WHERE userId = :userId ORDER BY `' . $sortField . '` ' . $order
+        );
+        $stmt->bindParam('userId', $userId, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        $allPhones = $stmt->fetchAll();
+        $resultArray = [];
+
+        foreach ($allPhones as $row) {
+            $resultArray[] = $this->inflate($row);
+        }
+
+        return $resultArray;
+    }
+
+    /**
      * @param $id
      */
     public function removeById($id)
