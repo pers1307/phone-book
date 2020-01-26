@@ -5,9 +5,9 @@
 use pers1307\phoneBook\entity\Phone;
 
 ?>
-<tr class="js-new-row-phone">
+<tr class="js-new-row-phone" data-id="<?= $phone->getId() ?>">
     <td>
-        <form id="js-new-row-phone-form" role="form" method="post" action="/api/phone/update" enctype="multipart/form-data">
+        <form id="js-new-row-phone-form" role="form" method="post" action="/api/phone/update" enctype="multipart/form-data" data-id="<?= $phone->getId() ?>">
 
             <? if(!empty($phone->getPathImage())): ?>
                 <div class="text-center">

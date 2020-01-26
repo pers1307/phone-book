@@ -84,8 +84,6 @@
 
                                             <th class="js-sort sorting" data-name="name" data-next="asc">Имя</span></th>
                                             <th class="js-sort sorting" data-name="surname" data-next="asc">Фамилия</th>
-<!--                                            <th class="sorting_asc">Телефон </th>-->
-<!--                                            <th class="sorting_desc">Телефон </th>-->
                                             <th class="js-sort sorting" data-name="phone" data-next="asc">Телефон</th>
                                             <th class="js-sort sorting" data-name="email" data-next="asc">Email </th>
                                             <th></th>

@@ -58,6 +58,8 @@ $(document).ready(function() {
     $(document).on('submit', '#js-new-row-phone-form', function(event) {
         event.preventDefault();
 
+        var id = $(this).data('id');
+
         var furl = $(this).attr('action');
         var formData = new FormData($(this)[0]);
 
@@ -76,8 +78,12 @@ $(document).ready(function() {
             {
                 response = JSON.parse(response);
 
-                $('.js-new-row-phone').remove();
-                $(response.row).insertAfter($("#phone-table .js-row-phone:last"));
+                if (id !== undefined) {
+                    $('.js-new-row-phone[data-id=' + id + ']').replaceWith(response.row);
+                } else {
+                    $('.js-new-row-phone').remove();
+                    $(response.row).insertAfter($("#phone-table .js-row-phone:last"));
+                }
             },
             error: function(response)
             {
@@ -104,7 +110,6 @@ $(document).ready(function() {
         event.stopPropagation();
 
         var id = $(this).data('id');
-
 
         $.ajax({
             type: "POST",
