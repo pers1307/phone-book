@@ -33,7 +33,7 @@ CREATE TABLE `phones` (
   PRIMARY KEY (`id`),
   KEY `phones_users_fk` (`userId`),
   CONSTRAINT `phones_users_fk` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +42,7 @@ CREATE TABLE `phones` (
 
 LOCK TABLES `phones` WRITE;
 /*!40000 ALTER TABLE `phones` DISABLE KEYS */;
-INSERT INTO `phones` VALUES (1,'1111','222','+79126666044','sk@mail.ru','/upload/fon-devushka-elfiika.jpg',1),(2,'Ð®Ñ€Ð¸Ð¹','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','+7 (000) 000-00-00','skulines@gmail.com','/upload/upwork.jpeg',1),(7,'Ð®Ñ€Ð¸Ð¹','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','+719210111112','skulines@gmail.com','/upload/krasota-004.jpg',1);
+INSERT INTO `phones` VALUES (1,'1111','222','1212','sk@mail.ru','/upload/fon-devushka-elfiika.jpg',1),(2,'Ð®Ñ€Ð¸Ð¹','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','+7 (000) 000-00-00','skulines@gmail.com','/upload/upwork.jpeg',1),(8,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','1212','skulines@gmail.com','/upload/19609787.jpg',1),(9,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','test','skulines@gmail.com','',1),(11,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²!','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','1','skulines@gmail.com','/upload/keep-calm-and-practice-english-4.jpg',1),(12,'Ð®Ñ€Ð¸Ð¹','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','23','skulines@gmail.com','/upload/gabriel-gajdos-by-gabriel-gajdos-from-the-edge-planet-space.jpg',1),(17,'Ð®Ñ€Ð¸Ð¹','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','233','skulines@gmail.com','/upload/fon-devushka-elfiika.jpg',1),(18,'Ð®Ñ€Ð¸Ð¹','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','233','skulines@gmail.com','',1),(21,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','test','skulines@gmail.com','/upload/gabriel-gajdos-by-gabriel-gajdos-anthology-nebula-space.jpg',1),(23,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','1000','skulines@gmail.com','/upload/screenshot_20190812_134959.png',1),(24,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','2000','skulines@gmail.com','/upload/sneg-snezhinki-snow-snowflakes-2019-god-svini-god-2019-minim.jpg',1),(25,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','3000','skulines@gmail.com','/upload/vadim-sadovski-by-vadim-sadovski-nebula.jpg',1),(26,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','4000','skulines@gmail.com','/upload/zvezdy-planeta-kosmos-planety-planets-art-stars-space-art-sp.jpg',1),(27,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','5000','skulines@gmail.com','/upload/zvezdy-planeta-kosmos-planety-planets-art-stars-space-art-sp.jpg',1),(28,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','1001212','skulines@gmail.com','/upload/woocommerce-logo.jpg',1),(29,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','1000000','skulines@gmail.com','/upload/vadim-sadovski-by-vadim-sadovski-the-end.jpg',1),(30,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','2000000','skulines@gmail.com','/upload/sneg-snezhinki-snow-snowflakes-2019-god-svini-god-2019-minim.jpg',1),(31,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','5000000','skulines@gmail.com','/upload/selection_001.png',1),(32,'Ð®Ñ€Ð¸Ð¹ ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','ÐŸÐµÑ€ÐµÑÐºÐ¾ÐºÐ¾Ð²','1001212','skulines@gmail.com','/upload/screenshot_20190806_141138.png',1);
 /*!40000 ALTER TABLE `phones` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,4 +81,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-01-24 11:30:06
+-- Dump completed on 2020-01-26 21:17:31
