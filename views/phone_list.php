@@ -28,7 +28,7 @@
         <div class="sidebar">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="/img/vendor/user.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="/img/vendors/user.jpg" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
                     <a href="#" class="d-block">Логин пользователя</a>
@@ -75,55 +75,53 @@
                         <a href="/phone/create" class="btn btn-primary">Добавить</a>
                         <br>
 
-                        <? if(!empty($phones)): ?>
-                            <div class="card-body">
-                                <table id="phone-table" class="table table-bordered dataTable no-footer">
-                                    <thead>
-                                        <tr>
-                                            <th>Фото</th>
+                        <div class="card-body">
+                            <table id="phone-table" class="table table-bordered dataTable no-footer">
+                                <thead>
+                                    <tr>
+                                        <th>Фото</th>
 
-                                            <th class="js-sort sorting" data-name="name" data-next="asc">Имя</span></th>
-                                            <th class="js-sort sorting" data-name="surname" data-next="asc">Фамилия</th>
-                                            <th class="js-sort sorting" data-name="phone" data-next="asc">Телефон</th>
-                                            <th class="js-sort sorting" data-name="email" data-next="asc">Email </th>
-                                            <th></th>
+                                        <th class="js-sort sorting" data-name="name" data-next="asc">Имя</span></th>
+                                        <th class="js-sort sorting" data-name="surname" data-next="asc">Фамилия</th>
+                                        <th class="js-sort sorting" data-name="phone" data-next="asc">Телефон</th>
+                                        <th class="js-sort sorting" data-name="email" data-next="asc">Email </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <? foreach($phones as $phone): ?>
+                                        <tr class="js-row-phone" data-id="<?= $phone->getId() ?>">
+                                            <td>
+                                                <? if(!empty($phone->getPathImage())): ?>
+                                                    <img width="200" src="<?= $phone->getPathImage() ?>" alt="<?= $phone->getName() ?>">
+                                                <? endif; ?>
+                                            </td>
+                                            <td>
+                                                <?= $phone->getName() ?>
+                                            </td>
+                                            <td>
+                                                <?= $phone->getSurname() ?>
+                                            </td>
+                                            <td>
+                                                <?= $phone->getPhone() ?>
+                                                <br>
+                                                <?= $phoneToText->convertPhoneToText($phone->getPhone()) ?>
+                                            </td>
+                                            <td>
+                                                <?= $phone->getEmail() ?>
+                                            </td>
+                                            <td>
+                                                <a href="/phone/edit/<?= $phone->getId() ?>">Редактировать</a>
+                                                <br>
+                                                <a class="js-row-phone-update" href="#" data-id="<?= $phone->getId() ?>">Редактировать через ajax</a>
+                                                <br>
+                                                <a class="js-row-phone-remove" href="#" data-id="<?= $phone->getId() ?>">Удалить</a>
+                                            </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <? foreach($phones as $phone): ?>
-                                            <tr class="js-row-phone" data-id="<?= $phone->getId() ?>">
-                                                <td>
-                                                    <? if(!empty($phone->getPathImage())): ?>
-                                                        <img width="200" src="<?= $phone->getPathImage() ?>" alt="<?= $phone->getName() ?>">
-                                                    <? endif; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $phone->getName() ?>
-                                                </td>
-                                                <td>
-                                                    <?= $phone->getSurname() ?>
-                                                </td>
-                                                <td>
-                                                    <?= $phone->getPhone() ?>
-                                                    <br>
-                                                    <?= $phoneToText->convertPhoneToText($phone->getPhone()) ?>
-                                                </td>
-                                                <td>
-                                                    <?= $phone->getEmail() ?>
-                                                </td>
-                                                <td>
-                                                    <a href="/phone/edit/<?= $phone->getId() ?>">Редактировать</a>
-                                                    <br>
-                                                    <a class="js-row-phone-update" href="#" data-id="<?= $phone->getId() ?>">Редактировать через ajax</a>
-                                                    <br>
-                                                    <a class="js-row-phone-remove" href="#" data-id="<?= $phone->getId() ?>">Удалить</a>
-                                                </td>
-                                            </tr>
-                                        <? endforeach; ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <? endif; ?>
+                                    <? endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
 
                         <a href="#" class="js-phone-add btn btn-primary">Добавить через ajax</a>
                     </div>

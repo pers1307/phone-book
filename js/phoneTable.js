@@ -47,7 +47,12 @@ $(document).ready(function() {
             success: function(response)
             {
                 response = JSON.parse(response);
-                $(response.template).insertAfter($("#phone-table .js-row-phone:last"));
+
+                if ($('.js-row-phone').length > 0) {
+                    $(response.template).insertAfter($("#phone-table .js-row-phone:last"));
+                } else {
+                    $('tbody').append(response.template);
+                }
             }
         }); // $.ajax
     });
@@ -82,7 +87,12 @@ $(document).ready(function() {
                     $('.js-new-row-phone[data-id=' + id + ']').replaceWith(response.row);
                 } else {
                     $('.js-new-row-phone').remove();
-                    $(response.row).insertAfter($("#phone-table .js-row-phone:last"));
+
+                    if ($('.js-row-phone').length > 0) {
+                        $(response.row).insertAfter($("#phone-table .js-row-phone:last"));
+                    } else {
+                        $('tbody').append(response.row);
+                    }
                 }
             },
             error: function(response)
