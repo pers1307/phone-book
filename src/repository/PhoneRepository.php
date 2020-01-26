@@ -59,7 +59,7 @@ class PhoneRepository
         $stmt->execute();
         $found = $stmt->fetch();
 
-        if (is_null($found)) {
+        if (!$found) {
             return null;
         }
 

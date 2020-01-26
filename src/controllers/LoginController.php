@@ -25,6 +25,10 @@ class LoginController extends AbstractController
     public function loginAction()
     {
         try {
+            if (Autorization::getInstance()->checkAutorization()) {
+                (new Redirect())->gotoUrl('/phones');
+            }
+
             /** @var Request $request */
             $request = (new Request)->createFromGlobals();
             $loginForm = new LoginForm();
