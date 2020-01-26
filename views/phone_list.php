@@ -18,6 +18,8 @@
         <link rel="stylesheet" href="/css/vendors/adminlte.min.css">
         <!-- Google Font: Source Sans Pro -->
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+        <link rel="stylesheet" href="/css/custom.css">
     </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -88,7 +90,7 @@
                                     </thead>
                                     <tbody>
                                         <? foreach($phones as $phone): ?>
-                                            <tr>
+                                            <tr class="js-row-phone" data-id="<?= $phone->getId() ?>">
                                                 <td>
                                                     <? if(!empty($phone->getPathImage())): ?>
                                                         <img width="200" src="<?= $phone->getPathImage() ?>" alt="<?= $phone->getName() ?>">
@@ -111,14 +113,45 @@
                                                 <td>
                                                     <a href="/phone/edit/<?= $phone->getId() ?>">Редактировать</a>
                                                     <br>
-<!--                                                    <a href="/phone/delete/--><?//= $phone->getId() ?><!--">Удалить</a>-->
+                                                    <a class="js-row-phone-remove" href="#" data-id="<?= $phone->getId() ?>">Удалить</a>
                                                 </td>
                                             </tr>
                                         <? endforeach; ?>
+
+<!--                                        <tr class="js-new-row-phone">-->
+<!--                                            <form role="form" method="post" action="" enctype="multipart/form-data">-->
+<!---->
+<!--                                                <td>-->
+<!--                                                    <div class="input-group">-->
+<!--                                                        <div class="custom-file">-->
+<!--                                                            <input type="file" class="custom-file-input" name="photo" id="photoId">-->
+<!--                                                            <label class="custom-file-label" for="photoId">Выберете файл</label>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="text" name="name" class="form-control" id="nameId" value="">-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="text" name="surname" class="form-control" id="surnameId" value="">-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="text" name="phone" class="form-control" id="phoneId" value="">-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="text" name="email" class="form-control" id="emailId" value="">-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <button type="submit" class="btn btn-primary">Добавить</button>-->
+<!--                                                </td>-->
+<!--                                            </form>-->
+<!--                                        </tr>-->
                                     </tbody>
                                 </table>
                             </div>
                         <? endif; ?>
+
+                        <a href="#" class="js-phone-add btn btn-primary">Добавить через ajax</a>
                     </div>
                 </div>
                 <!-- /.col -->
@@ -131,6 +164,38 @@
     <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
 
+<div class="js-new-row-phone-template">
+    <tr class="js-new-row-phone">
+        <form role="form" method="post" action="" enctype="multipart/form-data">
+
+            <td>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="photo" id="photoId">
+                        <label class="custom-file-label" for="photoId">Выберете файл</label>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <input type="text" name="name" class="form-control" id="nameId" value="">
+            </td>
+            <td>
+                <input type="text" name="surname" class="form-control" id="surnameId" value="">
+            </td>
+            <td>
+                <input type="text" name="phone" class="form-control" id="phoneId" value="">
+            </td>
+            <td>
+                <input type="text" name="email" class="form-control" id="emailId" value="">
+            </td>
+            <td>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </td>
+        </form>
+    </tr>
+</div>
+
+
 <!-- jQuery -->
 <script src="/js/vendors/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
@@ -140,6 +205,10 @@
 <script src="/js/vendors/dataTables.bootstrap4.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/js/vendors/adminlte.min.js"></script>
+
+<script src="/js/addPhoneAjax.js"></script>
+
+<!--<script src="/js/addPhoneAjax.js"></script>-->
 
 <!-- page script -->
 <script>

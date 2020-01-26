@@ -92,6 +92,23 @@ class PhoneRepository
     }
 
     /**
+     * @param $id
+     */
+    public function removeById($id)
+    {
+        $ForConnect = new MySqlConnection();
+        $connection = $ForConnect->getConnection();
+
+        $stmt = $connection->prepare(
+            'DELETE FROM phones WHERE id = :id'
+        );
+
+        $stmt->execute([
+            'id' => $id
+        ]);
+    }
+
+    /**
      * @param Phone $phone
      */
     public function update($phone)

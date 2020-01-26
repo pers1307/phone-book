@@ -22,6 +22,11 @@ $router->addRoute('/phone/delete/{id}', 'pers1307\phoneBook\controllers\PhoneIte
 $router->addRoute('/phone/create', 'pers1307\phoneBook\controllers\PhoneItemController', 'createAction');
 $router->addRoute('/phone/edit/{id}', 'pers1307\phoneBook\controllers\PhoneItemController', 'editAction');
 
+$router->addRoute('/api/phone/remove', 'pers1307\phoneBook\api\PhoneController', 'removeAction');
+$router->addRoute('/api/phone/sort', 'pers1307\phoneBook\api\PhoneController', 'sortAction');
+$router->addRoute('/api/phone/add', 'pers1307\phoneBook\api\PhoneController', 'addAction');
+$router->addRoute('/api/phone/update', 'pers1307\phoneBook\api\PhoneController', 'updateAction');
+
 $dispatcher = new Dispatcher($router->getData());
 
 /** @var Response $response */

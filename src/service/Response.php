@@ -33,11 +33,13 @@ class Response
     /**
      * Response constructor.
      *
-     * @param $code
+     * @param string $code
+     * @param string $content
      */
-    public function __construct($code)
+    public function __construct($code, $content = Response::CONTENT_HTML)
     {
-        $this->code = $code;
+        $this->code    = $code;
+        $this->content = $content;
     }
 
     /**
