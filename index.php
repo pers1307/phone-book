@@ -27,6 +27,8 @@ $router->addRoute('/api/phone/sort', 'pers1307\phoneBook\api\PhoneController', '
 $router->addRoute('/api/phone/add', 'pers1307\phoneBook\api\PhoneController', 'addAction');
 $router->addRoute('/api/phone/update', 'pers1307\phoneBook\api\PhoneController', 'updateAction');
 
+$router->addRoute('/api/phone/table/row/template', 'pers1307\phoneBook\api\PhoneController', 'getRowForNewPhone');
+
 $dispatcher = new Dispatcher($router->getData());
 
 /** @var Response $response */

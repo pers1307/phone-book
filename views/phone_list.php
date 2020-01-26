@@ -77,7 +77,7 @@
 
                         <? if(!empty($phones)): ?>
                             <div class="card-body">
-                                <table id="example2" class="table table-bordered">
+                                <table id="phone-table" class="table table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Фото</th>
@@ -112,6 +112,8 @@
                                                 </td>
                                                 <td>
                                                     <a href="/phone/edit/<?= $phone->getId() ?>">Редактировать</a>
+                                                    <br>
+                                                    <a class="js-row-phone-update" href="#" data-id="<?= $phone->getId() ?>">Редактировать через ajax</a>
                                                     <br>
                                                     <a class="js-row-phone-remove" href="#" data-id="<?= $phone->getId() ?>">Удалить</a>
                                                 </td>
@@ -163,38 +165,6 @@
 
     <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
-
-<div class="js-new-row-phone-template">
-    <tr class="js-new-row-phone">
-        <form role="form" method="post" action="" enctype="multipart/form-data">
-
-            <td>
-                <div class="input-group">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" name="photo" id="photoId">
-                        <label class="custom-file-label" for="photoId">Выберете файл</label>
-                    </div>
-                </div>
-            </td>
-            <td>
-                <input type="text" name="name" class="form-control" id="nameId" value="">
-            </td>
-            <td>
-                <input type="text" name="surname" class="form-control" id="surnameId" value="">
-            </td>
-            <td>
-                <input type="text" name="phone" class="form-control" id="phoneId" value="">
-            </td>
-            <td>
-                <input type="text" name="email" class="form-control" id="emailId" value="">
-            </td>
-            <td>
-                <button type="submit" class="btn btn-primary">Добавить</button>
-            </td>
-        </form>
-    </tr>
-</div>
-
 
 <!-- jQuery -->
 <script src="/js/vendors/jquery.min.js"></script>
