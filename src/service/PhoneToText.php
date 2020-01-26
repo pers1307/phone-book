@@ -175,7 +175,7 @@ class PhoneToText
                     && $splitPhoneItem[2] == 0
                     )
                 ) {
-                    $bufResult .= ' ' . $this->$unitForUse[$key];
+                    $bufResult .= ' ' . $this->{$unitForUse}[$key];
                 }
             }
 
