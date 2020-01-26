@@ -12,6 +12,7 @@ namespace pers1307\phoneBook\service;
 
 use pers1307\phoneBook\entity\Phone;
 use pers1307\phoneBook\entity\User;
+use pers1307\phoneBook\exception\NotFoundFileException;
 use pers1307\phoneBook\forms\PhoneForm;
 use pers1307\phoneBook\forms\RegisterForm;
 
@@ -73,6 +74,22 @@ class ConvertFormToEntity
         }
 
         return $phone;
+    }
+
+    /**
+     * @param Phone $phone
+     *
+     * @throws NotFoundFileException
+     */
+    public function removeFileByPhoto($phone)
+    {
+        $pathToDirectory = __DIR__ . '/../..' . $phone->getPathImage();
+
+        if (!file_exists($pathToDirectory)) {
+            throw new NotFoundFileException('File not found: ' . $pathToDirectory);
+        }
+
+        unlink($pathToDirectory);
     }
 
     /**

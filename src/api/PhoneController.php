@@ -14,6 +14,7 @@ use pers1307\phoneBook\controllers\AbstractController;
 use pers1307\phoneBook\exception\FormNotValidException;
 use pers1307\phoneBook\exception\InvalidAutorizationException;
 use pers1307\phoneBook\exception\NoPostArgumentException;
+use pers1307\phoneBook\exception\NotFoundFileException;
 use pers1307\phoneBook\forms\PhoneForm;
 use pers1307\phoneBook\forms\PhoneIdForm;
 use pers1307\phoneBook\forms\PhoneRemoveForm;
@@ -39,6 +40,12 @@ class PhoneController extends AbstractController
                 $phoneRemoveForm = $phoneRemoveForm->getDataFromRequest($request);
                 $phoneRemoveForm->validate();
 
+                /** @var PhoneRepository $phoneRepository */
+                $phoneRepository = new PhoneRepository();
+
+                $phone = $phoneRepository->findById($phoneRemoveForm->id);
+                (new ConvertFormToEntity())->removeFileByPhoto($phone);
+
                 (new PhoneRepository())->removeById($phoneRemoveForm->id);
             }
 
@@ -54,6 +61,10 @@ class PhoneController extends AbstractController
             $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
             return $response;
         } catch (NoPostArgumentException $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
+            return $response;
+        } catch (NotFoundFileException $exception) {
             $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
             $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
             return $response;
