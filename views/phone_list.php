@@ -119,35 +119,6 @@
                                                 </td>
                                             </tr>
                                         <? endforeach; ?>
-
-<!--                                        <tr class="js-new-row-phone">-->
-<!--                                            <form role="form" method="post" action="" enctype="multipart/form-data">-->
-<!---->
-<!--                                                <td>-->
-<!--                                                    <div class="input-group">-->
-<!--                                                        <div class="custom-file">-->
-<!--                                                            <input type="file" class="custom-file-input" name="photo" id="photoId">-->
-<!--                                                            <label class="custom-file-label" for="photoId">Выберете файл</label>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </td>-->
-<!--                                                <td>-->
-<!--                                                    <input type="text" name="name" class="form-control" id="nameId" value="">-->
-<!--                                                </td>-->
-<!--                                                <td>-->
-<!--                                                    <input type="text" name="surname" class="form-control" id="surnameId" value="">-->
-<!--                                                </td>-->
-<!--                                                <td>-->
-<!--                                                    <input type="text" name="phone" class="form-control" id="phoneId" value="">-->
-<!--                                                </td>-->
-<!--                                                <td>-->
-<!--                                                    <input type="text" name="email" class="form-control" id="emailId" value="">-->
-<!--                                                </td>-->
-<!--                                                <td>-->
-<!--                                                    <button type="submit" class="btn btn-primary">Добавить</button>-->
-<!--                                                </td>-->
-<!--                                            </form>-->
-<!--                                        </tr>-->
                                     </tbody>
                                 </table>
                             </div>
@@ -176,9 +147,7 @@
 <!-- AdminLTE App -->
 <script src="/js/vendors/adminlte.min.js"></script>
 
-<script src="/js/addPhoneAjax.js"></script>
-
-<!--<script src="/js/addPhoneAjax.js"></script>-->
+<script src="/js/phoneTable.js"></script>
 
 <!-- page script -->
 <script>

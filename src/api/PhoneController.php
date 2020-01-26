@@ -15,6 +15,7 @@ use pers1307\phoneBook\exception\FormNotValidException;
 use pers1307\phoneBook\exception\InvalidAutorizationException;
 use pers1307\phoneBook\exception\NoPostArgumentException;
 use pers1307\phoneBook\forms\PhoneForm;
+use pers1307\phoneBook\forms\PhoneIdForm;
 use pers1307\phoneBook\forms\PhoneRemoveForm;
 use pers1307\phoneBook\repository\PhoneRepository;
 use pers1307\phoneBook\service\Autorization;
@@ -63,11 +64,6 @@ class PhoneController extends AbstractController
         }
     }
 
-    public function sortAction()
-    {
-
-    }
-
     public function addAction()
     {
         try {
@@ -113,11 +109,100 @@ class PhoneController extends AbstractController
         }
     }
 
+    public function updateTemplateAction()
+    {
+        try {
+            Autorization::getInstance()->checkAutorizationWithException();
 
+            /** @var Request $request */
+            $request = (new Request)->createFromGlobals();
+            $phoneIdForm = new PhoneIdForm();
 
+            if (!is_null($request->getPost())) {
+                $phoneIdForm = $phoneIdForm->getDataFromRequest($request);
+                $phoneIdForm->validate();
+            }
 
+            $phone = (new PhoneRepository())->findById($phoneIdForm->id);
+
+            $response = new Response(200, Response::CONTENT_JSON);
+            $response->setContent(json_encode([
+                'row' => $this->render('templates/phone_row_update_form.php', ['phone' => $phone])
+            ]));
+            return $response;
+        } catch (InvalidAutorizationException $exception) {
+            $response = new Response(Response::HTTP_UNAUTHORIZED, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => $exception->getMessage()]));
+            return $response;
+        } catch (FormNotValidException $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
+            return $response;
+        } catch (NoPostArgumentException $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
+            return $response;
+        } catch (\Exception $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
+            return $response;
+        }
+    }
 
     public function updateAction()
+    {
+        try {
+            Autorization::getInstance()->checkAutorizationWithException();
+
+            /** @var Request $request */
+            $request = (new Request)->createFromGlobals();
+            $phoneForm = new PhoneForm();
+            $phoneIdForm = new PhoneIdForm();
+
+            if (!is_null($request->getPost())) {
+                $phoneForm = $phoneForm->getDataFromRequest($request);
+                $phoneForm->validate();
+
+                $phoneIdForm = $phoneIdForm->getDataFromRequest($request);
+                $phoneIdForm->validate();
+
+                $phone = (new ConvertFormToEntity())->phoneFormToPhoneEntity(
+                    $phoneForm,
+                    Autorization::getInstance()->getCurrentUserId()
+                );
+
+                $phone->setId($phoneIdForm->id);
+                (new PhoneRepository())->update($phone);
+
+                $phone = (new PhoneRepository())->findById($phone->getId());
+            }
+
+            $response = new Response(200, Response::CONTENT_JSON);
+            $response->setContent(json_encode([
+                'row' => $this->render('templates/phone_row.php', ['phone' => $phone, 'phoneToText' => (new PhoneToText())])
+            ]));
+            return $response;
+        } catch (InvalidAutorizationException $exception) {
+            $response = new Response(Response::HTTP_UNAUTHORIZED, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => $exception->getMessage()]));
+            return $response;
+        } catch (FormNotValidException $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['errors' => $phoneForm->getErrors()]));
+            return $response;
+        } catch (NoPostArgumentException $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
+            return $response;
+        } catch (\Exception $exception) {
+            $response = new Response(Response::HTTP_INTERNAL_SERVER_ERROR, Response::CONTENT_JSON);
+            $response->setContent(json_encode(['error' => 'Что то пошло не так!']));
+            return $response;
+        }
+    }
+
+
+    public function sortAction()
     {
 
     }
@@ -130,38 +215,4 @@ class PhoneController extends AbstractController
         ]));
         return $response;
     }
-
-
-
-
-//    public function indexAction()
-//    {
-//        try {
-//            Autorization::getInstance()->checkAutorizationWithException();
-//
-//            $userId = Autorization::getInstance()->getCurrentUserId();
-//            $phones = (new PhoneRepository())->findAllByUserId($userId);
-//
-//            $response = new Response(200);
-//            $response->setContent(
-//                $this->render('phone_list.php', [
-//                    'phones'      => $phones,
-//                    'phoneToText' => (new PhoneToText()),
-//                ])
-//            );
-//            return $response;
-//        } catch (InvalidAutorizationException $exception) {
-//            $response = new Response(200);
-//            $response->setContent(
-//                $this->render('autorize_error.php', [])
-//            );
-//            return $response;
-//        } catch (\Exception $exception) {
-//            $response = new Response(200);
-//            $response->setContent(
-//                $this->render('server_error.php', [])
-//            );
-//            return $response;
-//        }
-//    }
 }

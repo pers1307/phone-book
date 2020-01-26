@@ -95,4 +95,32 @@ $(document).ready(function() {
             }
         }); // $.ajax
     });
+
+    /**
+     * Update button
+     */
+    $(document).on('click', '.js-row-phone-update', function(event) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        var id = $(this).data('id');
+
+
+        $.ajax({
+            type: "POST",
+            url: '/api/phone/table/update/template',
+            data: { id : id },
+            success: function(response)
+            {
+                $('.js-new-row-phone').remove();
+                response = JSON.parse(response);
+                $('.js-row-phone[data-id=' + id + ']').replaceWith(response.row);
+            },
+            error: function(response)
+            {
+                response = JSON.parse(response.responseText);
+                alert(response.error);
+            }
+        }); // $.ajax
+    });
 });

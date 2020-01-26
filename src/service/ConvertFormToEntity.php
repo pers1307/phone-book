@@ -52,7 +52,12 @@ class ConvertFormToEntity
      */
     public function phoneFormToPhoneEntity($phoneForm, $userId)
     {
-        $pathToUrl = '';
+        $phone = (new Phone())
+            ->setName($phoneForm->name)
+            ->setSurname($phoneForm->surname)
+            ->setPhone($phoneForm->phone)
+            ->setEmail($phoneForm->email)
+            ->setUserId($userId);
 
         if (!empty($phoneForm->files)) {
             $newName = $this->translit($phoneForm->files['photo']['name']);
@@ -63,15 +68,9 @@ class ConvertFormToEntity
             if (!move_uploaded_file($phoneForm->files['photo']['tmp_name'], $pathToDirectory)) {
                 throw new \Exception('File not move');
             }
-        }
 
-        $phone = (new Phone())
-            ->setName($phoneForm->name)
-            ->setSurname($phoneForm->surname)
-            ->setPhone($phoneForm->phone)
-            ->setEmail($phoneForm->email)
-            ->setPathImage($pathToUrl)
-            ->setUserId($userId);
+            $phone->setPathImage($pathToUrl);
+        }
 
         return $phone;
     }

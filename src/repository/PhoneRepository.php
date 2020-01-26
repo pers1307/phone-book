@@ -116,6 +116,29 @@ class PhoneRepository
         $ForConnect = new MySqlConnection();
         $connection = $ForConnect->getConnection();
 
+        if (is_null($phone->getPathImage())) {
+            $stmt = $connection->prepare(
+                'UPDATE phones
+            SET 
+            name = :name,
+            surname = :surname,
+            phone = :phone,
+            email = :email
+            WHERE
+            id = :id'
+            );
+
+            $stmt->execute([
+                'name'       => $phone->getName(),
+                'surname'    => $phone->getSurname(),
+                'phone'      => $phone->getPhone(),
+                'email'      => $phone->getEmail(),
+                'id'         => $phone->getId()
+            ]);
+
+            return;
+        }
+
         $stmt = $connection->prepare(
             'UPDATE phones
             SET 
