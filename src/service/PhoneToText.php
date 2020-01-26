@@ -80,11 +80,41 @@ class PhoneToText
     /**
      * @var array
      */
-    protected $unit = [
+    protected $onesesForAlonePosition = [
+        '',
+        'одна',
+        'две',
+        'три',
+        'четыре',
+        'пять',
+        'шесть',
+        'семь',
+        'восемь',
+        'девять'
+    ];
+
+    /**
+     * @var array
+     */
+    protected $unitAfterFive = [
         '',
         'тысяч',
         'миллионов',
         'миллиардов',
+    ];
+
+    protected $unitOne = [
+        '',
+        'тысяча',
+        'миллион',
+        'миллиард',
+    ];
+
+    protected $unitTwoTreeFour = [
+        '',
+        'тысячи',
+        'миллиона',
+        'миллиарда',
     ];
 
     /**
@@ -116,6 +146,8 @@ class PhoneToText
 
         $result = '';
         foreach ($splitPhone as $key => $splitPhoneItem) {
+            $splitPhoneItem = $this->normalizeSplitPhoneItem($splitPhoneItem);
+            $unitForUse     = $this->useUnit($splitPhoneItem);
             $bufResult = '';
 
             $bufResult .= ' ' . $this->hundred[$splitPhoneItem[0]];
@@ -126,7 +158,14 @@ class PhoneToText
                 $bufResult .= ' ' . $this->tensBefore20[$keyFor20];
             } else {
                 $bufResult .= ' ' . $this->tens[$splitPhoneItem[1]];
-                $bufResult .= ' ' . $this->oneses[$splitPhoneItem[2]];
+
+                // Для тысяч
+                if ($key == 1) {
+                    $bufResult .= ' ' . $this->onesesForAlonePosition[$splitPhoneItem[2]];
+                } else {
+                    $bufResult .= ' ' . $this->oneses[$splitPhoneItem[2]];
+                }
+
             }
 
             if ($key >= 1) {
@@ -136,7 +175,7 @@ class PhoneToText
                     && $splitPhoneItem[2] == 0
                     )
                 ) {
-                    $bufResult .= ' ' . $this->unit[$key];
+                    $bufResult .= ' ' . $this->$unitForUse[$key];
                 }
             }
 
@@ -144,5 +183,56 @@ class PhoneToText
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $splitPhoneItem
+     * @return string
+     */
+    protected function normalizeSplitPhoneItem($splitPhoneItem)
+    {
+        $count = strlen($splitPhoneItem);
+
+        $addItem = 3 - $count;
+
+        for ($index = 0; $index < $addItem; $index++) {
+            $splitPhoneItem = '0' . $splitPhoneItem;
+        }
+
+        return $splitPhoneItem;
+    }
+
+    /**
+     * @param string $splitPhoneItem
+     *
+     * @return string
+     */
+    protected function useUnit($splitPhoneItem)
+    {
+        $countForProcess = strlen($splitPhoneItem);
+
+        $splitPhoneItemNew = $splitPhoneItem;
+        for ($index = 0; $index < $countForProcess; $index++) {
+            if ($splitPhoneItem[$index] == 0) {
+                $splitPhoneItemNew = substr($splitPhoneItemNew, 1);
+            } else {
+                break;
+            }
+        }
+
+        $splitPhoneItem = $splitPhoneItemNew;
+        $count = strlen($splitPhoneItem);
+
+        if ($count == 1) {
+            if ($splitPhoneItem == 1) {
+                return 'unitOne';
+            }
+
+            if ($splitPhoneItem > 1 && $splitPhoneItem < 5) {
+                return 'unitTwoTreeFour';
+            }
+        }
+
+        return 'unitAfterFive';
     }
 }
