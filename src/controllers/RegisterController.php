@@ -17,6 +17,7 @@ use pers1307\phoneBook\repository\UserRepository;
 use pers1307\phoneBook\service\ConvertFormToEntity;
 use pers1307\phoneBook\service\Redirect;
 use pers1307\phoneBook\service\Request;
+use pers1307\phoneBook\service\Response;
 
 class RegisterController extends AbstractController
 {
@@ -37,28 +38,41 @@ class RegisterController extends AbstractController
                 (new Redirect())->gotoUrl('/register-success');
             }
 
-            $result = $this->render('register.php', ['registerForm' => $registerForm]);
-            echo $result;
+            $response = new Response(200);
+            $response->setContent(
+                $this->render('register.php', ['registerForm' => $registerForm])
+            );
+            return $response;
         } catch (FormNotValidException $exception) {
-            $result = $this->render('register.php', [
-                'registerForm' => $registerForm,
-                'errors'       => $registerForm->getErrors(),
-            ]);
-            echo $result;
+            $response = new Response(200);
+            $response->setContent(
+                $this->render('register.php', [
+                    'registerForm' => $registerForm,
+                    'errors'       => $registerForm->getErrors(),
+                ])
+            );
+            return $response;
         } catch (NoPostArgumentException $exception) {
-            $result = $this->render('server_error.php', []);
-            echo $result;
+            $response = new Response(500);
+            $response->setContent(
+                $this->render('server_error.php', [])
+            );
+            return $response;
         } catch (\Exception $exception) {
-            $result = $this->render('server_error.php', []);
-            echo $result;
+            $response = new Response(500);
+            $response->setContent(
+                $this->render('server_error.php', [])
+            );
+            return $response;
         }
-
-        return '';
     }
 
     public function registerSuccessAction()
     {
-        $result = $this->render('register_success.php', []);
-        echo $result;
+        $response = new Response(200);
+        $response->setContent(
+            $this->render('register_success.php', [])
+        );
+        return $response;
     }
 }
